@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import '~react-datepicker/dist/react-datepicker.css';
+
+.bg-beige-gradient {
+  background: linear-gradient(to bottom, #FCF8F5, #E0EFBD);
+}
+
+@media (max-width: 1023px) {
+  h1 { font-size: 2.5rem !important; }
+  .grid-cols-8 { grid-template-columns: repeat(4, 1fr) !important; }
+}
+
+@media (max-width: 640px) {
+  .p-12 { padding: 1.5rem 1rem !important; }
+  h1 { font-size: 1.875rem !important; }
+  .grid-cols-4 { grid-template-columns: repeat(2, 1fr) !important; }
+}
