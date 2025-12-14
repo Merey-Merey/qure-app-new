@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URLS } from '../services/api';
 
+
 interface Product {
   id: string;
   name: string;
@@ -408,7 +409,7 @@ const AdminProducts = () => {
                     onClick={handleCancelEdit}
                     className="text-[#8a96a6] hover:text-[#1f2733] text-xl"
                   >
-                    ×
+                    х
                   </button>
                 </div>
 

@@ -1,7 +1,8 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import '~react-datepicker/dist/react-datepicker.css';
 
 .bg-beige-gradient {
   background: linear-gradient(to bottom, #FCF8F5, #E0EFBD);
