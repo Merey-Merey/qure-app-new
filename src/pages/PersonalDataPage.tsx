@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Calendar, Download, Camera, User, Phone } from 'iconoir-react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import '@/styles/apple-datepicker.css';
+import '../styles/apple-datepicker.css';
 import { useProfileStore } from '../store/profile';
 
 type Gender = 'male' | 'female';
