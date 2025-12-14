@@ -1,3 +1,9 @@
+@import 'react-datepicker/dist/react-datepicker.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .react-datepicker {
   font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Manrope", sans-serif;
   border-radius: 18px !important;
