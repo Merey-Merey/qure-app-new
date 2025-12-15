@@ -43,7 +43,7 @@ export default function AccountSettingsStep2() {
               </div>
 
               <h1
-                className="text-3xl xl:text-4xl font-bold leading-tight mb-6"
+                className="text-3xl xl:text-3xl font-bold leading-tight mb-6"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -54,10 +54,10 @@ export default function AccountSettingsStep2() {
               </h1>
               
               <p
-                className="text-base xl:text-lg text-[#4D7059] leading-relaxed mb-8"
+                className="text-base xl:text-base text-[#4D7059] leading-relaxed mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  lineHeight: '1.5'
+                  lineHeight: '1.3'
                 }}
               >
                 Выберите, какие уведомления вы хотите получать. Мы будем держать вас в курсе всех важных событий.
@@ -98,7 +98,7 @@ export default function AccountSettingsStep2() {
           <div className="w-full max-w-2xl mx-auto">
             <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12">
               <h2
-                className="text-2xl xl:text-3xl font-bold text-center mb-8"
+                className="text-2xl xl:text-2xl font-bold text-center mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -114,10 +114,10 @@ export default function AccountSettingsStep2() {
                       <Bell className="text-[#2B865A]" width={24} height={24} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Уведомления о статусе заказа
                       </h3>
-                      <p className="text-sm text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <p className="text-xs text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Получать обновления о ваших заказах
                       </p>
                     </div>
@@ -141,10 +141,10 @@ export default function AccountSettingsStep2() {
                     <div className="w-12 h-12 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Персональные рекомендации
                       </h3>
-                      <p className="text-sm text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <p className="text-xs text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Не чаще чем 2 раза в неделю
                       </p>
                     </div>
@@ -168,10 +168,10 @@ export default function AccountSettingsStep2() {
                     <div className="w-12 h-12 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Скидки и акции
                       </h3>
-                      <p className="text-sm text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <p className="text-xs text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Не чаще чем 2 раза в неделю
                       </p>
                     </div>
@@ -196,10 +196,10 @@ export default function AccountSettingsStep2() {
                       <Heart className="text-[#2B865A]" width={24} height={24} />
                     </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Уведомления об избранных товарах
                       </h3>
-                      <p className="text-sm text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      <p className="text-xs text-[#635436]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         Об изменениях цен и наличии товаров
                       </p>
                     </div>
@@ -221,7 +221,7 @@ export default function AccountSettingsStep2() {
 
               <button
                 onClick={handleSubmit}
-                className="w-full rounded-xl px-6 py-4 text-lg font-bold transition-all duration-300 mt-10 bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]"
+                className="w-full rounded-xl px-3 py-2 text-base font-bold transition-all duration-300 mt-10 bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   height: '56px',

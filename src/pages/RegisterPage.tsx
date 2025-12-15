@@ -1,28 +1,37 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock, User, CheckCircle } from 'iconoir-react';
-import { useAuth } from '../context/useAuth';
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: 'user';
+  createdAt: string;
+}
 
 export default function RegisterPage() {
   const navigate = useNavigate();
-  const { login } = useAuth();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
     password: '',
-    confirmPassword: '',
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
 
   const handleRegister = async () => {
     if (!formData.name || !formData.email || !formData.password ) {
       setError('Заполните все поля');
       return;
     }
-
-  
 
     if (formData.password.length < 6) {
       setError('Пароль должен быть минимум 6 символов');
@@ -31,48 +40,35 @@ export default function RegisterPage() {
 
     setIsLoading(true);
     setError(null);
-try {
-    const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
-    const emailExists = storedUsers.some((u: any) => u.email === formData.email);
-    
-    if (emailExists) {
-      throw new Error('Этот email уже используется');
+
+    try {
+      const storedUsers = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+      const emailExists = storedUsers.some((u) => u.email === formData.email);
+
+      if (emailExists) {
+        throw new Error('Этот email уже используется');
+      }
+
+      const newUser: User = {
+        id: Date.now(),
+        name: formData.name,
+        email: formData.email,
+        password: formData.password,
+        role: 'user',
+        createdAt: new Date().toISOString(),
+      };
+
+      const updatedUsers = [...storedUsers, newUser];
+      localStorage.setItem('users', JSON.stringify(updatedUsers));
+      localStorage.setItem('tempUserId', newUser.id.toString());
+
+      navigate('/register/success');
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Ошибка регистрации');
+    } finally {
+      setIsLoading(false);
     }
-
-    const newUser = {
-      id: Date.now(),
-      name: formData.name,
-      email: formData.email,
-      password: formData.password, 
-      role: 'user' as const,
-      createdAt: new Date().toISOString(),
-    };
-
-    const updatedUsers = [...storedUsers, newUser];
-    localStorage.setItem('users', JSON.stringify(updatedUsers));
-
-    const userData = {
-      id: newUser.id,
-      name: newUser.name,
-      email: newUser.email,
-      role: newUser.role,
-    };
-
-    const token = `fake-jwt-token-${newUser.id}`;
-    login(userData, token);
-    
-    setSuccess(true);
-    
-    setTimeout(() => {
-      navigate('/main-page');
-    }, 2000);
-
-  } catch (err) {
-    setError(err instanceof Error ? err.message : 'Ошибка регистрации');
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   const handleBack = () => {
     navigate(-1);
@@ -80,7 +76,7 @@ try {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name as keyof FormData]: value }));
     setError(null);
   };
 
@@ -104,7 +100,9 @@ try {
       </div>
 
       <div className="relative z-10 w-full h-screen">
+        {/* DESKTOP */}
         <div className="hidden md:flex w-full h-full">
+          {/* Левая колонка */}
           <div className="w-2/5 h-full flex flex-col items-center justify-center p-12 xl:p-16 2xl:p-20">
             <div className="max-w-md mx-auto w-full">
               <button
@@ -164,150 +162,141 @@ try {
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white/50 flex items-center justify-center shadow">
-                  <span className="text-[#2B865A] font-bold text-lg">Q</span>
+                  <span className="text-[#2B865A] font-bold text-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>Q</span>
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-[#2B865A]">Qure</h2>
+                  <h2 className="text-lg font-bold text-[#2B865A]" style={{ fontFamily: 'Manrope, sans-serif' }}>Qure</h2>
                   <p className="text-sm text-[#4D7059]">Health Assistant</p>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Правая колонка - форма */}
           <div className="w-3/5 h-full flex items-center justify-center p-12 xl:p-16 2xl:p-20">
             <div className="w-full max-w-lg mx-auto">
               <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12">
                 <div className="mb-8">
-                  <h2 className="text-2xl xl:text-3xl font-bold text-center mb-4 text-[#222021]">
+                  <h2 className="text-2xl xl:text-3xl font-bold text-center mb-4 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Регистрация
                   </h2>
-                  <p className="text-base text-center text-[#767B78] mb-6">
+                  <p className="text-base text-center text-[#767B78] mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Заполните данные для создания аккаунта
                   </p>
                 </div>
 
-                {success ? (
-                  <div className="text-center py-8">
-                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                      <CheckCircle className="text-green-600" width={32} height={32} />
+                <div className="space-y-6">
+                  {/* Имя */}
+                  <div>
+                    <label className="block text-lg font-semibold mb-3 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Имя
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                        <User className="text-[#989C99]" width={20} height={20} />
+                      </div>
+                      <input
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleChange}
+                        onKeyPress={handleKeyPress}
+                        className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
+                        style={{ height: '52px', fontFamily: 'Manrope, sans-serif' }}
+                        placeholder="Введите ваше имя"
+                      />
                     </div>
-                    <h3 className="text-xl font-bold text-[#222021] mb-2">Регистрация успешна!</h3>
-                    <p className="text-[#767B78] mb-6">Вы будете перенаправлены в личный кабинет...</p>
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#2B865A] mx-auto"></div>
                   </div>
-                ) : (
-                  <>
-                    <div className="space-y-6">
-                      <div>
-                        <label className="block text-lg font-semibold mb-3 text-[#222021]">
-                          Имя
-                        </label>
-                        <div className="relative">
-                          <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                            <User className="text-[#989C99]" width={20} height={20} />
-                          </div>
-                          <input
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            onKeyPress={handleKeyPress}
-                            className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
-                            style={{ height: '52px' }}
-                            placeholder="Введите ваше имя"
-                          />
-                        </div>
-                      </div>
 
-                      <div>
-                        <label className="block text-lg font-semibold mb-3 text-[#222021]">
-                          Email
-                        </label>
-                        <div className="relative">
-                          <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                            <Mail className="text-[#989C99]" width={20} height={20} />
-                          </div>
-                          <input
-                            type="email"
-                            name="email"
-                            value={formData.email}
-                            onChange={handleChange}
-                            onKeyPress={handleKeyPress}
-                            className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
-                            style={{ height: '52px' }}
-                            placeholder="Введите ваш email"
-                          />
-                        </div>
+                  {/* Email */}
+                  <div>
+                    <label className="block text-lg font-semibold mb-3 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Email
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                        <Mail className="text-[#989C99]" width={20} height={20} />
                       </div>
-
-                      <div>
-                        <label className="block text-lg font-semibold mb-3 text-[#222021]">
-                          Пароль
-                        </label>
-                        <div className="relative">
-                          <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                            <Lock className="text-[#989C99]" width={20} height={20} />
-                          </div>
-                          <input
-                            type="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleChange}
-                            onKeyPress={handleKeyPress}
-                            className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
-                            style={{ height: '52px' }}
-                            placeholder="Придумайте пароль"
-                          />
-                        </div>
-                        <p className="mt-1 text-sm text-[#767B78]">Минимум 6 символов</p>
-                      </div>
-
-                
+                      <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        onKeyPress={handleKeyPress}
+                        className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
+                        style={{ height: '52px', fontFamily: 'Manrope, sans-serif' }}
+                        placeholder="Введите ваш email"
+                      />
                     </div>
+                  </div>
 
-                    {error && (
-                      <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                        <p className="text-red-600 text-sm flex items-center gap-2">
-                          <span>⚠</span> {error}
-                        </p>
+                  {/* Пароль */}
+                  <div>
+                    <label className="block text-lg font-semibold mb-3 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Пароль
+                    </label>
+                    <div className="relative">
+                      <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
+                        <Lock className="text-[#989C99]" width={20} height={20} />
                       </div>
-                    )}
+                      <input
+                        type="password"
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        onKeyPress={handleKeyPress}
+                        className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
+                        style={{ height: '52px', fontFamily: 'Manrope, sans-serif' }}
+                        placeholder="Придумайте пароль"
+                      />
+                    </div>
+                    <p className="mt-1 text-sm text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>Минимум 6 символов</p>
+                  </div>
 
-                    <button
-                      onClick={handleRegister}
-                      disabled={isLoading}
-                      className={`w-full rounded-xl px-6 py-4 text-lg font-bold transition-all duration-300 mt-8 ${
-                        isLoading
-                          ? 'bg-[#F8F8F8] text-[#D1D3D2] cursor-not-allowed'
-                          : 'bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]'
-                      }`}
-                      style={{ height: '56px' }}
-                    >
-                      {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
-                    </button>
-
-                    <div className="text-center mt-6">
-                      <p className="text-base text-[#767B78]">
-                        Уже есть аккаунт?{' '}
-                        <button
-                          onClick={() => navigate('/login')}
-                          className="font-bold text-[#2B865A] hover:text-[#24704A] transition-colors"
-                        >
-                          Войти
-                        </button>
+        
+                  {error && (
+                    <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                      <p className="text-red-600 text-sm flex items-center gap-2" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                        <span>⚠</span> {error}
                       </p>
                     </div>
-                  </>
-                )}
+                  )}
+
+                  <button
+                    onClick={handleRegister}
+                    disabled={isLoading}
+                    className={`w-full rounded-xl px-6 py-4 text-lg font-bold transition-all duration-300 mt-8 ${
+                      isLoading
+                        ? 'bg-[#F8F8F8] text-[#D1D3D2] cursor-not-allowed'
+                        : 'bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]'
+                    }`}
+                    style={{ height: '56px', fontFamily: 'Manrope, sans-serif' }}
+                  >
+                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+                  </button>
+
+                  <div className="text-center mt-6">
+                    <p className="text-base text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                      Уже есть аккаунт?{' '}
+                      <button
+                        onClick={() => navigate('/login')}
+                        className="font-bold text-[#2B865A] hover:text-[#24704A] transition-colors"
+                        style={{ fontFamily: 'Manrope, sans-serif' }}
+                      >
+                        Войти
+                      </button>
+                    </p>
+                  </div>
+                </div>
 
                 <div className="mt-8 pt-6 border-t border-[#F0F0F0]">
-                  <p className="text-sm text-center text-[#767B78]">
+                  <p className="text-sm text-center text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Нажимая кнопку, вы соглашаетесь с{' '}
-                    <button className="text-[#2B865A] hover:underline">
+                    <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       условиями использования
                     </button>{' '}
                     и{' '}
-                    <button className="text-[#2B865A] hover:underline">
+                    <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       политикой конфиденциальности
                     </button>
                   </p>
@@ -317,6 +306,7 @@ try {
           </div>
         </div>
 
+        {/* MOBILE */}
         <div className="md:hidden w-full h-full">
           <div className="w-full h-full" style={{
             background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
@@ -325,115 +315,109 @@ try {
               <button onClick={handleBack} aria-label="Назад">
                 <ArrowLeft width={16} height={16} style={{ color: '#767B78' }} />
               </button>
-              <div className="w-[320px] text-center text-[#767B78]">Регистрация</div>
+              <div className="w-[320px] text-center text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>Регистрация</div>
             </div>
 
             <div className="p-6">
-              <h1 className="text-2xl font-bold text-center mb-4 text-[#222021]">
+              <h1 className="text-2xl font-bold text-center mb-4 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                 Создайте аккаунт
               </h1>
 
-              <p className="text-center text-[#767B78] mb-6">
+              <p className="text-center text-[#767B78] mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
                 Заполните данные для регистрации
               </p>
 
-              {success ? (
-                <div className="text-center py-8">
-                  <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <CheckCircle className="text-green-600" width={24} height={24} />
-                  </div>
-                  <h3 className="text-lg font-bold text-[#222021] mb-2">Успешно!</h3>
-                  <p className="text-[#767B78]">Перенаправление...</p>
+              <div className="space-y-4 mb-6">
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    Имя
+                  </label>
+                  <input
+                    type="text"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
+                    style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                    placeholder="Введите имя"
+                  />
                 </div>
-              ) : (
-                <>
-                  <div className="space-y-4 mb-6">
-                    <div>
-                      <label className="block text-sm font-semibold mb-2 text-[#222021]">
-                        Имя
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
-                        placeholder="Введите имя"
-                      />
-                    </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2 text-[#222021]">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
-                        placeholder="Введите email"
-                      />
-                    </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    Email
+                  </label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
+                    style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                    placeholder="Введите email"
+                  />
+                </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2 text-[#222021]">
-                        Пароль
-                      </label>
-                      <input
-                        type="password"
-                        name="password"
-                        value={formData.password}
-                        onChange={handleChange}
-                        className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
-                        placeholder="Придумайте пароль"
-                      />
-                      <p className="mt-1 text-xs text-[#767B78]">Минимум 6 символов</p>
-                    </div>
+                <div>
+                  <label className="block text-sm font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    Пароль
+                  </label>
+                  <input
+                    type="password"
+                    name="password"
+                    value={formData.password}
+                    onChange={handleChange}
+                    className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
+                    style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                    placeholder="Придумайте пароль"
+                  />
+                  <p className="mt-1 text-xs text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>Минимум 6 символов</p>
+                </div>
 
-                    <div>
-                      <label className="block text-sm font-semibold mb-2 text-[#222021]">
-                        Подтвердите пароль
-                      </label>
-                      <input
-                        type="password"
-                        name="confirmPassword"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
-                        className="w-full rounded-[12px] border border-[#F8F8F8] px-4 py-3 bg-white"
-                        placeholder="Повторите пароль"
-                      />
-                    </div>
-                  </div>
+          
+              </div>
 
-                  {error && (
-                    <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                      <p className="text-red-600 text-sm">{error}</p>
-                    </div>
-                  )}
-
-                  <button
-                    onClick={handleRegister}
-                    disabled={isLoading}
-                    className={`w-full rounded-[100px] px-6 py-3 font-bold ${
-                      isLoading
-                        ? 'bg-[#F8F8F8] text-[#D1D3D2]'
-                        : 'bg-[#2B865A] text-white hover:bg-[#24704A]'
-                    }`}
-                  >
-                    {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
-                  </button>
-
-                  <div className="text-center mt-4">
-                    <button
-                      onClick={() => navigate('/login')}
-                      className="text-[#2B865A] hover:text-[#24704A] text-sm"
-                    >
-                      Уже есть аккаунт? Войти
-                    </button>
-                  </div>
-                </>
+              {error && (
+                <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+                  <p className="text-red-600 text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>{error}</p>
+                </div>
               )}
+
+              <button
+                onClick={handleRegister}
+                disabled={isLoading}
+                className={`w-full rounded-[100px] px-6 py-3 font-bold ${
+                  isLoading
+                    ? 'bg-[#F8F8F8] text-[#D1D3D2]'
+                    : 'bg-[#2B865A] text-white hover:bg-[#24704A]'
+                }`}
+                style={{ height: '44px', fontFamily: 'Manrope, sans-serif', fontSize: '16px' }}
+              >
+                {isLoading ? 'Регистрация...' : 'Зарегистрироваться'}
+              </button>
+
+              <div className="text-center mt-4">
+                <button
+                  onClick={() => navigate('/login')}
+                  className="text-[#2B865A] hover:text-[#24704A] text-sm"
+                  style={{ fontFamily: 'Manrope, sans-serif' }}
+                >
+                  Уже есть аккаунт? Войти
+                </button>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-[#F8F8F8]">
+                <p className="text-xs text-center text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  Нажимая кнопку, вы соглашаетесь с{' '}
+                  <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    условиями использования
+                  </button>{' '}
+                  и{' '}
+                  <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    политикой конфиденциальности
+                  </button>
+                </p>
+              </div>
             </div>
           </div>
         </div>

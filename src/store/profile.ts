@@ -15,6 +15,7 @@ type Profile = {
 
 type ProfileState = {
   profile: Profile | null;
+  
   setFromPhone: (phone: string) => void;
   setFullProfile: (data: Partial<Profile>) => void;
   setFavoritesCount: (count: number) => void;

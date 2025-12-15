@@ -49,7 +49,7 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
                 <div className="flex items-center gap-3 mb-8">
                   <CheckCircle className="text-[#2B865A]" width={32} height={32} />
                   <h1
-                    className="text-4xl xl:text-5xl 2xl:text-6xl font-bold"
+                    className="text-4xl xl:text-4xl 2xl:text-6xl font-bold"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -60,10 +60,10 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
                 </div>
                 
                 <p
-                  className="text-xl xl:text-2xl text-[#4D7059] leading-relaxed mb-12"
+                  className="text-xl xl:text-base text-[#4D7059] leading-relaxed mb-12"
                   style={{
                     fontFamily: 'Manrope, sans-serif',
-                    lineHeight: '1.6'
+                    lineHeight: '1.3'
                   }}
                 >
                   Теперь вы можете совершать покупки в интернет магазине Qure.<br />
@@ -74,7 +74,7 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
                   <div className="flex flex-col p-6 rounded-2xl bg-white/30 backdrop-blur-sm">
                     <div className="w-12 h-12 rounded-xl bg-[#2B865A]/10 flex items-center justify-center mb-4">
                     </div>
-                    <h3 className="font-semibold text-[#222021] text-lg mb-2">Персональные рекомендации</h3>
+                    <h3 className="font-semibold text-[#222021] text-base mb-2">Персональные рекомендации</h3>
                     <p className="text-sm text-[#4D7059]">Подходящие товары именно для вас</p>
                   </div>
                   
@@ -82,7 +82,7 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
                     <div className="w-12 h-12 rounded-xl bg-[#2B865A]/10 flex items-center justify-center mb-4">
                       <ShoppingBag className="text-[#2B865A]" width={24} height={24} />
                     </div>
-                    <h3 className="font-semibold text-[#222021] text-lg mb-2">Быстрые покупки</h3>
+                    <h3 className="font-semibold text-[#222021] text-base mb-2">Быстрые покупки</h3>
                     <p className="text-sm text-[#4D7059]">Оформление заказа в 1 клик</p>
                   </div>
                 </div>
@@ -90,15 +90,15 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
 
               <div className="flex gap-8">
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[#2B865A]">5000+</div>
+                  <div className="text-1xl font-bold text-[#2B865A]">5000+</div>
                   <div className="text-sm text-[#4D7059]">Товаров</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[#2B865A]">100%</div>
+                  <div className="text-1xl font-bold text-[#2B865A]">100%</div>
                   <div className="text-sm text-[#4D7059]">Качество</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-3xl font-bold text-[#2B865A]">24/7</div>
+                  <div className="text-1xl font-bold text-[#2B865A]">24/7</div>
                   <div className="text-sm text-[#4D7059]">Поддержка</div>
                 </div>
               </div>
@@ -107,13 +107,13 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
 
           <div className="w-1/2 h-full relative flex flex-col items-center justify-center p-12 xl:p-16 2xl:p-20">
             <div className="flex-1 w-full flex items-center justify-center mb-12">
-              <div className="relative w-full h-full max-h-[60vh]">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[40vh] h-[40vh] rounded-full bg-gradient-to-br from-[#2B865A]/5 to-[#E0EFBD]/20"></div>
+              <div className="relative w-full max-h-[45vh]">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full bg-gradient-to-br from-[#2B865A]/5 to-[#E0EFBD]/20"></div>
                 
                 <img
                   src="/assets/images/sign-in-3.png"
                   alt="Account Created"
-                  className="relative z-10 w-full h-full object-contain animate-float"
+                  className="relative z-10  object-contain animate-float w-9/12 ml-16"
                   onError={(e) => (e.currentTarget.src = 'https://via.placeholder.com/600x600?text=Account+Created')}
                 />
               </div>
@@ -122,10 +122,10 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
             <div className="w-full max-w-md mx-auto flex flex-col items-center gap-6 z-20">
               <button
                 onClick={onContinue}
-                className="group flex items-center justify-center gap-4 w-full px-8 py-5 rounded-full bg-[#2B865A] text-white font-semibold hover:bg-[#24704A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform active:scale-95"
+                className="group flex items-center justify-center gap-4 w-full px-6 py-3 rounded-full bg-[#2B865A] text-white font-semibold hover:bg-[#24704A] transition-all duration-300 shadow-xl hover:shadow-2xl hover:scale-105 transform active:scale-95"
                 style={{ 
                   fontFamily: 'Manrope, sans-serif', 
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}
               >
                 Заполнить анкету
@@ -133,10 +133,10 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
 
               <button
                 onClick={() => navigate('/main-page')}
-                className="group flex items-center justify-center gap-4 w-full px-8 py-5 rounded-full bg-white/80 backdrop-blur-sm border-2 border-[#2B865A] text-[#2B865A] font-semibold hover:bg-white hover:shadow-xl transition-all duration-300 active:scale-95"
+                className="group flex items-center justify-center gap-4 w-full px-6 py-3 rounded-full bg-white/80 backdrop-blur-sm border-2 border-[#2B865A] text-[#2B865A] font-semibold hover:bg-white hover:shadow-xl transition-all duration-300 active:scale-95"
                 style={{ 
                   fontFamily: 'Manrope, sans-serif', 
-                  fontSize: '18px'
+                  fontSize: '16px'
                 }}
               >
                 <ShoppingBag className="transform group-hover:scale-110 transition-transform" width={24} height={24} />

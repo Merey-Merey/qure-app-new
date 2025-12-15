@@ -1,56 +1,86 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Calendar, Download, Camera, User, Phone } from 'iconoir-react';
+import {
+  ArrowLeft,
+  Calendar,
+  Download,
+  Camera,
+  User,
+  Phone,
+} from 'iconoir-react';
 import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css'; 
-import '../styles/apple-datepicker.css'; 
+import 'react-datepicker/dist/react-datepicker.css';
+import '../styles/apple-datepicker.css';
 import { useProfileStore } from '../store/profile';
 
 type Gender = 'male' | 'female';
 
 export default function PersonalDataPage() {
   const navigate = useNavigate();
+
   const profile = useProfileStore((s) => s.profile);
   const setFullProfile = useProfileStore((s) => s.setFullProfile);
+
   const [name, setName] = useState('');
   const [nameError, setNameError] = useState<string | null>(null);
+
   const [city, setCity] = useState('');
   const [cityError, setCityError] = useState<string | null>(null);
+
   const [phone, setPhone] = useState('');
   const [phoneError, setPhoneError] = useState<string | null>(null);
+
   const [gender, setGender] = useState<Gender>('male');
   const [birthDate, setBirthDate] = useState<Date | null>(null);
+
   const [avatarFile, setAvatarFile] = useState<File | null>(null);
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
   const [avatarError, setAvatarError] = useState<string | null>(null);
+
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [, setIsDesktop] = useState(false);
 
+  // определяем десктоп / мобайл (если вдруг понадобится)
   useEffect(() => {
     const checkScreenSize = () => {
       setIsDesktop(window.innerWidth >= 1024);
     };
-    
+
     checkScreenSize();
     window.addEventListener('resize', checkScreenSize);
-    
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // инициализация формы из profile
   useEffect(() => {
     if (profile) {
-      setName(profile.name);
-      setCity(profile.city);
-      setPhone(profile.phone);
-      setGender(profile.gender as Gender || 'male');
-      setBirthDate(profile.birthDate || null);
+      setName(profile.name ?? '');
+      setCity(profile.city ?? '');
+      setPhone(profile.phone ?? '');
+      setGender((profile.gender as Gender) || 'male');
+      setBirthDate(profile.birthDate ?? null);
+
+      if (profile.avatarFile) {
+        setAvatarFile(profile.avatarFile);
+        const url = URL.createObjectURL(profile.avatarFile);
+        setAvatarPreview(url);
+      }
     }
   }, [profile]);
 
+  // очистка превью при размонтировании / смене файла
+  useEffect(() => {
+    return () => {
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
+    };
+  }, [avatarPreview]);
+
   const validateName = (value: string): string | null => {
     if (!value.trim()) return 'Введите имя';
-    if (!/^[\p{L}\s\-–]+$/u.test(value.trim())) return 'Имя может содержать только буквы и знак «–»';
+    if (!/^[\p{L}\s\-–]+$/u.test(value.trim())) {
+      return 'Имя может содержать только буквы и знак «–»';
+    }
     if (value.trim().length < 2) return 'Имя должно содержать минимум 2 символа';
     return null;
   };
@@ -62,45 +92,45 @@ export default function PersonalDataPage() {
 
   const validatePhone = (value: string): string | null => {
     const digits = value.replace(/\D/g, '');
-    if (digits.length !== 11) return 'Неправильный формат номера телефона, проверьте количество цифр';
+    if (digits.length !== 11) {
+      return 'Неправильный формат номера телефона, проверьте количество цифр';
+    }
     return null;
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setName(value);
-    if (isSubmitted) {
-      const error = validateName(value);
-      setNameError(error);
-    }
+    if (isSubmitted) setNameError(validateName(value));
   };
 
   const handleCityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setCity(value);
-    if (isSubmitted) {
-      const error = validateCity(value);
-      setCityError(error);
-    }
+    if (isSubmitted) setCityError(validateCity(value));
   };
 
   const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setPhone(value);
-    if (isSubmitted) {
-      const error = validatePhone(value);
-      setPhoneError(error);
-    }
+    if (isSubmitted) setPhoneError(validatePhone(value));
   };
 
   const handleAvatarChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const isValidType = file.type === 'image/png' || file.type === 'image/jpeg' || file.type === 'image/jpg';
+    const isValidType =
+      file.type === 'image/png' ||
+      file.type === 'image/jpeg' ||
+      file.type === 'image/jpg';
+
     if (!isValidType) {
-      setAvatarError('Невозможно загрузить изображение. Используйте формат png или jpeg.');
+      setAvatarError(
+        'Невозможно загрузить изображение. Используйте формат png или jpeg.'
+      );
       setAvatarFile(null);
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
       setAvatarPreview(null);
       return;
     }
@@ -108,13 +138,15 @@ export default function PersonalDataPage() {
     if (file.size > 5 * 1024 * 1024) {
       setAvatarError('Размер изображения не должен превышать 5MB');
       setAvatarFile(null);
+      if (avatarPreview) URL.revokeObjectURL(avatarPreview);
       setAvatarPreview(null);
       return;
     }
 
     setAvatarError(null);
     setAvatarFile(file);
-    
+
+    if (avatarPreview) URL.revokeObjectURL(avatarPreview);
     const preview = URL.createObjectURL(file);
     setAvatarPreview(preview);
   };
@@ -122,14 +154,6 @@ export default function PersonalDataPage() {
   const handleAvatarButtonClick = () => {
     document.getElementById('avatar-input')?.click();
   };
-
-  useEffect(() => {
-    return () => {
-      if (avatarPreview) {
-        URL.revokeObjectURL(avatarPreview);
-      }
-    };
-  }, [avatarPreview]);
 
   const toggleCalendar = () => {
     setIsCalendarOpen((prev) => !prev);
@@ -146,30 +170,32 @@ export default function PersonalDataPage() {
     const nameErr = validateName(name);
     const cityErr = validateCity(city);
     const phoneErr = validatePhone(phone);
-    
+
     setNameError(nameErr);
     setCityError(cityErr);
     setPhoneError(phoneErr);
 
-    if (nameErr || cityErr || phoneErr || avatarError) {
-      return;
-    }
+    if (nameErr || cityErr || phoneErr || avatarError) return;
 
+    // сохраняем в стор (если profile был null, setFullProfile сам создаст профиль на основе defaultProfile)
     setFullProfile({
       name,
       city,
       phone,
       gender,
       birthDate,
-      avatarFile, 
+      avatarFile,
     });
 
+    // после сохранения всегда возвращаемся на /profile
     navigate('/profile');
   };
 
   return (
     <div className="w-full min-h-screen bg-background">
+      {/* DESKTOP */}
       <div className="hidden lg:flex w-full min-h-screen">
+        {/* Левая колонка */}
         <div className="w-2/5 h-full flex flex-col items-center p-8 xl:p-12 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
             <button
@@ -177,7 +203,11 @@ export default function PersonalDataPage() {
               className="flex items-center gap-3 mb-8 text-[#2B865A] hover:text-[#24704A] transition-colors group"
               style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px' }}
             >
-              <ArrowLeft className="transform group-hover:-translate-x-1 transition-transform" width={20} height={20} />
+              <ArrowLeft
+                className="transform group-hover:-translate-x-1 transition-transform"
+                width={20}
+                height={20}
+              />
               Назад в профиль
             </button>
 
@@ -187,20 +217,21 @@ export default function PersonalDataPage() {
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
-                  lineHeight: '1.2'
+                  lineHeight: '1.2',
                 }}
               >
                 Персональные данные
               </h1>
-              
+
               <p
                 className="text-base xl:text-base text-[#4D7059] leading-relaxed mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  lineHeight: '1.3'
+                  lineHeight: '1.3',
                 }}
               >
-                Обновите свои персональные данные для персонализированного обслуживания и получения индивидуальных рекомендаций.
+                Обновите свои персональные данные для персонализированного
+                обслуживания и получения индивидуальных рекомендаций.
               </p>
 
               <div className="space-y-4">
@@ -210,7 +241,9 @@ export default function PersonalDataPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-[#222021]">Имя и фото</h3>
-                    <p className="text-sm text-[#4D7059]">Помогает в общении с поддержкой</p>
+                    <p className="text-sm text-[#4D7059]">
+                      Помогает в общении с поддержкой
+                    </p>
                   </div>
                 </div>
 
@@ -219,8 +252,12 @@ export default function PersonalDataPage() {
                     <Phone className="text-[#2B865A]" width={20} height={20} />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#222021]">Контактные данные</h3>
-                    <p className="text-sm text-[#4D7059]">Для уведомлений о заказах</p>
+                    <h3 className="font-semibold text-[#222021]">
+                      Контактные данные
+                    </h3>
+                    <p className="text-sm text-[#4D7059]">
+                      Для уведомлений о заказах
+                    </p>
                   </div>
                 </div>
               </div>
@@ -228,7 +265,7 @@ export default function PersonalDataPage() {
 
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-white/50 flex items-center justify-center shadow">
-                <span 
+                <span
                   className="text-[#2B865A] font-bold text-lg"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -236,7 +273,7 @@ export default function PersonalDataPage() {
                 </span>
               </div>
               <div>
-                <h2 
+                <h2
                   className="text-lg font-bold text-[#2B865A]"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
@@ -248,6 +285,7 @@ export default function PersonalDataPage() {
           </div>
         </div>
 
+        {/* Правая колонка */}
         <div className="w-3/5 h-full flex items-center justify-center p-8 xl:p-12">
           <div className="w-full max-w-2xl mx-auto">
             <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12">
@@ -262,6 +300,7 @@ export default function PersonalDataPage() {
               </h2>
 
               <div className="space-y-8">
+                {/* Фото профиля */}
                 <div>
                   <label
                     className="block text-lg font-semibold mb-4"
@@ -272,7 +311,7 @@ export default function PersonalDataPage() {
                   >
                     Фото профиля
                   </label>
-                  
+
                   <div className="flex items-center gap-6">
                     <div className="relative">
                       <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#2B865A] to-[#E0EFBD] p-1">
@@ -285,28 +324,37 @@ export default function PersonalDataPage() {
                             />
                           ) : (
                             <div className="w-20 h-20 rounded-full bg-[#2B865A]/10 flex items-center justify-center">
-                              <User className="text-[#2B865A]" width={40} height={40} />
+                              <User
+                                className="text-[#2B865A]"
+                                width={40}
+                                height={40}
+                              />
                             </div>
                           )}
                         </div>
                       </div>
-                      
+
                       <button
                         onClick={handleAvatarButtonClick}
                         className="absolute bottom-2 right-2 w-10 h-10 rounded-full bg-white shadow-lg flex items-center justify-center hover:scale-110 transition-transform"
                       >
-                        <Camera className="text-[#2B865A]" width={18} height={18} />
+                        <Camera
+                          className="text-[#2B865A]"
+                          width={18}
+                          height={18}
+                        />
                       </button>
                     </div>
-                    
+
                     <div className="flex-1">
                       <p
                         className="text-sm text-[#4D7059] mb-4"
                         style={{ fontFamily: 'Manrope, sans-serif' }}
                       >
-                        Загрузите изображение в формате PNG или JPEG, размером не более 5MB
+                        Загрузите изображение в формате PNG или JPEG, размером
+                        не более 5MB
                       </p>
-                      
+
                       {isSubmitted && avatarError && (
                         <p
                           className="text-sm text-[#FE5F55] mb-3"
@@ -315,16 +363,19 @@ export default function PersonalDataPage() {
                           {avatarError}
                         </p>
                       )}
-                      
+
                       <button
                         onClick={handleAvatarButtonClick}
                         className="flex items-center gap-2 px-2 py-2 rounded-xl border-2 border-[#2B865A] text-[#2B865A] font-semibold hover:bg-[#2B865A] hover:text-white transition-all duration-300"
-                        style={{ fontFamily: 'Manrope, sans-serif', fontSize: '12px' }}
+                        style={{
+                          fontFamily: 'Manrope, sans-serif',
+                          fontSize: '12px',
+                        }}
                       >
                         <Download width={18} height={18} />
                         Загрузить фото
                       </button>
-                      
+
                       <input
                         id="avatar-input"
                         type="file"
@@ -336,6 +387,7 @@ export default function PersonalDataPage() {
                   </div>
                 </div>
 
+                {/* Имя */}
                 <div>
                   <label
                     className="block text-lg font-semibold mb-3"
@@ -344,6 +396,7 @@ export default function PersonalDataPage() {
                       color: '#222021',
                     }}
                   >
+                    Имя
                   </label>
                   <input
                     type="text"
@@ -370,6 +423,7 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
+                {/* Город */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-3"
@@ -405,6 +459,7 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
+                {/* Телефон */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-3"
@@ -440,6 +495,7 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
+                {/* Пол */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-3"
@@ -452,6 +508,7 @@ export default function PersonalDataPage() {
                   </label>
                   <div className="flex gap-4">
                     <button
+                      type="button"
                       onClick={() => setGender('male')}
                       className={`flex-1 flex items-center justify-center gap-3 py-2 rounded-xl border-2 transition-all duration-300 ${
                         gender === 'male'
@@ -459,9 +516,18 @@ export default function PersonalDataPage() {
                           : 'border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] text-[#635436]'
                       }`}
                     >
-                      <span style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500 , fontSize: '13px'}}>Мужчина</span>
+                      <span
+                        style={{
+                          fontFamily: 'Manrope, sans-serif',
+                          fontWeight: 500,
+                          fontSize: '13px',
+                        }}
+                      >
+                        Мужчина
+                      </span>
                     </button>
                     <button
+                      type="button"
                       onClick={() => setGender('female')}
                       className={`flex-1 flex items-center justify-center gap-3 py-2 rounded-xl border-2 transition-all duration-300 ${
                         gender === 'female'
@@ -469,11 +535,20 @@ export default function PersonalDataPage() {
                           : 'border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] text-[#635436]'
                       }`}
                     >
-                      <span style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 500, fontSize: '13px' }}>Женщина</span>
+                      <span
+                        style={{
+                          fontFamily: 'Manrope, sans-serif',
+                          fontWeight: 500,
+                          fontSize: '13px',
+                        }}
+                      >
+                        Женщина
+                      </span>
                     </button>
                   </div>
                 </div>
 
+                {/* Дата рождения */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-3"
@@ -513,7 +588,7 @@ export default function PersonalDataPage() {
                       <Calendar width={20} height={20} />
                     </button>
                   </div>
-                  
+
                   {isCalendarOpen && (
                     <div className="mt-4 bg-white rounded-xl shadow-lg p-4">
                       <DatePicker
@@ -548,38 +623,71 @@ export default function PersonalDataPage() {
         </div>
       </div>
 
+      {/* MOBILE */}
       <div className="lg:hidden flex min-h-screen w-full items-center justify-center bg-background">
         <div className="w-[390px] h-[750px] overflow-y-auto shadow-xl relative bg-white">
+          {/* header */}
           <div className="flex h-[60px] items-center px-4 pt-8 bg-white border-b border-[#F8F8F8]">
             <button onClick={() => navigate('/profile')} aria-label="Назад">
               <ArrowLeft width={20} height={20} style={{ color: '#635436' }} />
             </button>
-            <div 
-              className="ml-4 font-bold" 
-              style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px', color: '#635436' }}
+            <div
+              className="ml-4 font-bold"
+              style={{
+                fontFamily: 'Manrope, sans-serif',
+                fontSize: '16px',
+                color: '#635436',
+              }}
             >
               Персональные данные
             </div>
           </div>
 
           <div className="p-6 space-y-6 pt-8">
+            {/* Фото */}
             <div className="flex items-center gap-4 mb-6">
               <div className="w-[72px] h-[72px] rounded-full bg-[#E7F0EA] flex items-center justify-center overflow-hidden">
                 {avatarPreview ? (
-                  <img src={avatarPreview} alt="Аватар" className="w-full h-full object-cover" />
+                  <img
+                    src={avatarPreview}
+                    alt="Аватар"
+                    className="w-full h-full object-cover"
+                  />
                 ) : (
                   <div className="w-10 h-10 rounded-full bg-[#D0E0D5]" />
                 )}
               </div>
               <div className="flex-1">
-                <p style={{ fontFamily: 'Manrope, sans-serif', fontWeight: 600, fontSize: '14px', color: '#222021', marginBottom: '4px' }}>
+                <p
+                  style={{
+                    fontFamily: 'Manrope, sans-serif',
+                    fontWeight: 600,
+                    fontSize: '14px',
+                    color: '#222021',
+                    marginBottom: '4px',
+                  }}
+                >
                   Фото профиля
                 </p>
-                <p className="text-xs" style={{ fontFamily: 'Manrope, sans-serif', color: '#635436', marginBottom: '8px' }}>
+                <p
+                  className="text-xs"
+                  style={{
+                    fontFamily: 'Manrope, sans-serif',
+                    color: '#635436',
+                    marginBottom: '8px',
+                  }}
+                >
                   Загрузите изображение в формате png или jpeg
                 </p>
                 {isSubmitted && avatarError && (
-                  <p style={{ fontFamily: 'Manrope, sans-serif', fontSize: '12px', color: '#FE5F55', marginBottom: '8px' }}>
+                  <p
+                    style={{
+                      fontFamily: 'Manrope, sans-serif',
+                      fontSize: '12px',
+                      color: '#FE5F55',
+                      marginBottom: '8px',
+                    }}
+                  >
                     {avatarError}
                   </p>
                 )}
@@ -608,8 +716,12 @@ export default function PersonalDataPage() {
               </div>
             </div>
 
+            {/* Имя */}
             <div>
-              <label className="block mb-2 text-sm font-semibold" style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}>
+              <label
+                className="block mb-2 text-sm font-semibold"
+                style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}
+              >
                 Имя
               </label>
               <input
@@ -618,19 +730,31 @@ export default function PersonalDataPage() {
                 onChange={handleNameChange}
                 placeholder="Введите ваше имя"
                 className={`w-full rounded-[12px] px-4 py-3 text-base outline-none ${
-                  isSubmitted && nameError ? 'border border-[#FE5F55] bg-[#FFF0F0]' : 'border border-[#F8F8F8] bg-white'
+                  isSubmitted && nameError
+                    ? 'border border-[#FE5F55] bg-[#FFF0F0]'
+                    : 'border border-[#F8F8F8] bg-white'
                 }`}
-                style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                style={{
+                  height: '48px',
+                  fontFamily: 'Manrope, sans-serif',
+                }}
               />
               {isSubmitted && nameError && (
-                <p className="mt-1 text-sm" style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}>
+                <p
+                  className="mt-1 text-sm"
+                  style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}
+                >
                   {nameError}
                 </p>
               )}
             </div>
 
+            {/* Город */}
             <div>
-              <label className="block mb-2 text-sm font-semibold" style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}>
+              <label
+                className="block mb-2 text-sm font-semibold"
+                style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}
+              >
                 Город
               </label>
               <input
@@ -639,19 +763,31 @@ export default function PersonalDataPage() {
                 onChange={handleCityChange}
                 placeholder="г. Алматы"
                 className={`w-full rounded-[12px] px-4 py-3 text-base outline-none ${
-                  isSubmitted && cityError ? 'border border-[#FE5F55] bg-[#FFF0F0]' : 'border border-[#F8F8F8] bg-white'
+                  isSubmitted && cityError
+                    ? 'border border-[#FE5F55] bg-[#FFF0F0]'
+                    : 'border border-[#F8F8F8] bg-white'
                 }`}
-                style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                style={{
+                  height: '48px',
+                  fontFamily: 'Manrope, sans-serif',
+                }}
               />
               {isSubmitted && cityError && (
-                <p className="mt-1 text-sm" style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}>
+                <p
+                  className="mt-1 text-sm"
+                  style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}
+                >
                   {cityError}
                 </p>
               )}
             </div>
 
+            {/* Телефон */}
             <div>
-              <label className="block mb-2 text-sm font-semibold" style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}>
+              <label
+                className="block mb-2 text-sm font-semibold"
+                style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}
+              >
                 Телефон
               </label>
               <input
@@ -660,19 +796,31 @@ export default function PersonalDataPage() {
                 onChange={handlePhoneChange}
                 placeholder="+7 (999) 123-45-67"
                 className={`w-full rounded-[12px] px-4 py-3 text-base outline-none ${
-                  isSubmitted && phoneError ? 'border border-[#FE5F55] bg-[#FFF0F0]' : 'border border-[#F8F8F8] bg-white'
+                  isSubmitted && phoneError
+                    ? 'border border-[#FE5F55] bg-[#FFF0F0]'
+                    : 'border border-[#F8F8F8] bg-white'
                 }`}
-                style={{ height: '48px', fontFamily: 'Manrope, sans-serif' }}
+                style={{
+                  height: '48px',
+                  fontFamily: 'Manrope, sans-serif',
+                }}
               />
               {isSubmitted && phoneError && (
-                <p className="mt-1 text-sm" style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}>
+                <p
+                  className="mt-1 text-sm"
+                  style={{ fontFamily: 'Manrope, sans-serif', color: '#FE5F55' }}
+                >
                   {phoneError}
                 </p>
               )}
             </div>
 
+            {/* Пол */}
             <div>
-              <label className="block mb-2 text-sm font-semibold" style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}>
+              <label
+                className="block mb-2 text-sm font-semibold"
+                style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}
+              >
                 Пол
               </label>
               <div className="flex rounded-[12px] overflow-hidden border border-[#F8F8F8]">
@@ -707,8 +855,12 @@ export default function PersonalDataPage() {
               </div>
             </div>
 
+            {/* Дата рождения */}
             <div>
-              <label className="block mb-2 text-sm font-semibold" style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}>
+              <label
+                className="block mb-2 text-sm font-semibold"
+                style={{ color: '#222021', fontFamily: 'Manrope, sans-serif' }}
+              >
                 Дата рождения
               </label>
               <div className="flex items-center rounded-[12px] border border-[#F8F8F8]">
@@ -717,12 +869,19 @@ export default function PersonalDataPage() {
                   readOnly
                   value={
                     birthDate
-                      ? birthDate.toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' })
+                      ? birthDate.toLocaleDateString('ru-RU', {
+                          day: 'numeric',
+                          month: 'long',
+                          year: 'numeric',
+                        })
                       : 'ДД ММММ ГГГГ'
                   }
                   placeholder="ДД ММММ ГГГГ"
                   className="flex-1 px-4 py-3 bg-transparent outline-none"
-                  style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px' }}
+                  style={{
+                    fontFamily: 'Manrope, sans-serif',
+                    fontSize: '16px',
+                  }}
                   onClick={toggleCalendar}
                 />
                 <button
@@ -734,6 +893,7 @@ export default function PersonalDataPage() {
                   <Calendar width={20} height={20} />
                 </button>
               </div>
+
               {isCalendarOpen && (
                 <div className="mt-4">
                   <DatePicker

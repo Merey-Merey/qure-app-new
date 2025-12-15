@@ -1,9 +1,36 @@
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, ShoppingBag, ArrowLeft } from 'iconoir-react';
+import { useEffect } from 'react';
+import { ArrowLeft, CheckCircle, ShoppingBag } from 'iconoir-react';
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  role: 'user';
+}
 
 export default function AccountUpdated() {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const tempUserId = localStorage.getItem('tempUserId');
+    if (tempUserId) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+      const user = users.find((u) => u.id === Number(tempUserId));
+      if (user) {
+        localStorage.setItem('userId', tempUserId);
+        localStorage.setItem('authToken', `fake-jwt-token-${user.id}`);
+        localStorage.removeItem('tempUserId');
+      }
+    }
+
+    // const timer = setTimeout(() => {
+    //   navigate('/main-page');
+    // }, 5000);
+
+    // return () => clearTimeout(timer);
+  }, [navigate]);
+  
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-background">
       <div className="hidden md:flex w-full h-screen">
@@ -24,7 +51,7 @@ export default function AccountUpdated() {
               </div>
 
               <h1
-                className="text-3xl xl:text-4xl font-bold leading-tight mb-6 text-center"
+                className="text-3xl xl:text-2xl font-bold leading-tight mb-6 text-center"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -35,10 +62,10 @@ export default function AccountUpdated() {
               </h1>
               
               <p
-                className="text-base xl:text-lg text-[#4D7059] leading-relaxed mb-8 text-center"
+                className="text-base xl:text-base text-[#4D7059] leading-relaxed mb-8 text-center"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  lineHeight: '1.5'
+                  lineHeight: '1.3'
                 }}
               >
                 Ваши персональные данные сохранены. Теперь вы можете пользоваться всеми преимуществами персонализированного сервиса
@@ -93,10 +120,10 @@ export default function AccountUpdated() {
         <div className="w-3/5 h-full flex items-center justify-center p-12 xl:p-16 2xl:p-20">
           <div className="w-full max-w-2xl mx-auto">
             <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12 overflow-hidden">
-              <div className="relative mb-10">
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full bg-gradient-to-br from-[#2B865A]/5 to-[#E0EFBD]/20 blur-2xl"></div>
+              <div className="relative ">
+                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  rounded-full bg-gradient-to-br from-[#2B865A]/5 to-[#E0EFBD]/20 blur-2xl"></div>
                 
-                <div className="relative z-10 w-full max-w-md mx-auto">
+                <div className="relative z-10 w-2/3  max-w-md mx-auto">
                   <img
                     src="/assets/images/sign-in-3.png"
                     alt="Данные обновлены"
@@ -109,7 +136,7 @@ export default function AccountUpdated() {
               <div className="space-y-8">
                 <div>
                   <h2
-                    className="text-2xl xl:text-3xl font-bold text-center mb-4"
+                    className="text-2xl xl:text-1xl font-bold text-center mb-4"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -117,25 +144,16 @@ export default function AccountUpdated() {
                   >
                     Готово к покупкам!
                   </h2>
-                  
-                  <p
-                    className="text-lg text-center text-[#4D7059] leading-relaxed"
-                    style={{
-                      fontFamily: 'Manrope, sans-serif',
-                      lineHeight: '1.6'
-                    }}
-                  >
-                    Настройки аккаунта успешно сохранены. Теперь вы можете пользоваться всеми преимуществами персонального подхода в интернет-магазине Qure.
-                  </p>
+                
                 </div>
 
                 <div className="space-y-4">
                   <button
                     onClick={() => navigate('/profile')}
-                    className="w-full flex items-center justify-center gap-3 py-4 rounded-xl bg-[#2B865A] text-white font-semibold hover:bg-[#24704A] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
+                    className="w-full flex items-center justify-center gap-3 py-2 rounded-xl bg-[#2B865A] text-white font-semibold hover:bg-[#24704A] transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98]"
                     style={{ 
                       fontFamily: 'Manrope, sans-serif', 
-                      fontSize: '18px'
+                      fontSize: '16px'
                     }}
                   >
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -150,10 +168,10 @@ export default function AccountUpdated() {
 
                   <button
                     onClick={() => navigate('/main-page')}
-                    className="w-full flex items-center justify-center gap-3 py-4 rounded-xl border-2 border-[#2B865A] text-[#2B865A] font-semibold hover:bg-[#2B865A] hover:text-white transition-all duration-300 active:scale-[0.98]"
+                    className="w-full flex items-center justify-center gap-3 py-2 rounded-xl border-2 border-[#2B865A] text-[#2B865A] font-semibold hover:bg-[#2B865A] hover:text-white transition-all duration-300 active:scale-[0.98]"
                     style={{ 
                       fontFamily: 'Manrope, sans-serif', 
-                      fontSize: '18px'
+                      fontSize: '16px'
                     }}
                   >
                     <ShoppingBag width={24} height={24} />

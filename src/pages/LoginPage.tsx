@@ -3,74 +3,111 @@ import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Mail, Lock, Shield } from 'iconoir-react';
 import { useAuth } from '../context/useAuth';
 
+interface FormData {
+  email: string;
+  password: string;
+}
+
+interface User {
+  id: number;
+  name: string;
+  email: string;
+  password?: string;
+  role: 'user' | 'admin';
+  createdAt?: string;
+}
+
 export default function LoginPage() {
   const navigate = useNavigate();
   const { login } = useAuth();
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: '',
     password: '',
   });
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleLogin = async () => {
-    if (!formData.email || !formData.password) {
-      setError('Заполните все поля');
-      return;
-    }
+const handleLogin = async () => {
+  if (!formData.email || !formData.password) {
+    setError('Заполните все поля');
+    return;
+  }
 
-    setIsLoading(true);
-    setError(null);
+  setIsLoading(true);
+  setError(null);
 
-    try {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+  try {
+    const storedUsers = JSON.parse(localStorage.getItem('users') || '[]') as User[];
+    const storedUser = storedUsers.find((u) => u.email === formData.email && u.password === formData.password);
+
+    let userData: User;
+    let token: string;
+
+    if (storedUser) {
+      userData = {
+        id: storedUser.id,
+        name: storedUser.name,
+        email: storedUser.email,
+        role: storedUser.role,
+      };
+      token = `user-jwt-${storedUser.id}-${Date.now()}`;
       
-      const storedUsers = JSON.parse(localStorage.getItem('users') || '[]');
-      const storedUser = storedUsers.find(
-        (u: any) => u.email === formData.email && u.password === formData.password
-      );
+      console.log('%c USER LOGIN SUCCESS', 'color: #2B865A; font-size: 16px; font-weight: bold');
+      console.table({
+        'ID': storedUser.id,
+        'Имя': storedUser.name,
+        'Email': storedUser.email,
+        'Роль': storedUser.role,
+        'Токен': token,
+        'Время': new Date().toLocaleString('ru-RU')
+      });
 
-      if (storedUser) {
-        const userData = {
-          id: storedUser.id,
-          name: storedUser.name,
-          email: storedUser.email,
-          role: storedUser.role,
-        };
+    } else if (formData.email === 'admin@qure.kz' && formData.password === 'admin123') {
+      userData = {
+        id: 0,
+        name: 'Администратор',
+        email: formData.email,
+        role: 'admin',
+      };
+      token = `admin-jwt-${Date.now()}`;
+      
+      console.log('%c ADMIN LOGIN SUCCESS', 'color: #FF6B35; font-size: 16px; font-weight: bold');
+      console.table({
+        'ID': 0,
+        'Имя': 'Администратор',
+        'Email': formData.email,
+        'Роль': 'admin',
+        'Токен': token,
+        'Время': new Date().toLocaleString('ru-RU')
+      });
 
-        const token = `fake-jwt-token-${userData.id}`;
-        login(userData, token);
-
-        if (userData.role === 'admin') {
-          navigate('/admin');
-        } else {
-          navigate('/main-page');
-        }
-        return;
-      }
-
-      if (formData.email === 'admin@qure.kz' && formData.password === 'admin123') {
-        const adminData = {
-          id: 1,
-          name: 'Администратор',
-          email: formData.email,
-          role: 'admin' as const,
-        };
-
-        const token = 'fake-jwt-token-admin';
-        login(adminData, token);
-        navigate('/admin');
-        return;
-      }
-
+    } else {
       throw new Error('Неверный email или пароль');
-
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ошибка авторизации');
-    } finally {
-      setIsLoading(false);
     }
-  };
+
+    localStorage.setItem('user', JSON.stringify(userData));  
+    localStorage.setItem('token', token);               
+    localStorage.setItem('authToken', token);               
+    localStorage.setItem('userId', userData.id.toString());
+
+    login(userData, token);
+
+    setTimeout(() => {
+      if (userData.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/main-page');
+      }
+    }, 1500);
+
+  } catch (err) {
+    setError(err instanceof Error ? err.message : 'Ошибка авторизации');
+  } finally {
+    setIsLoading(false);
+  }
+};
+
+
 
   const handleBack = () => {
     navigate(-1);
@@ -78,7 +115,7 @@ export default function LoginPage() {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
+    setFormData(prev => ({ ...prev, [name as keyof FormData]: value }));
     setError(null);
   };
 
@@ -87,6 +124,7 @@ export default function LoginPage() {
       handleLogin();
     }
   };
+
 
   return (
     <div className="relative w-full min-h-screen overflow-hidden">
@@ -102,6 +140,7 @@ export default function LoginPage() {
       </div>
 
       <div className="relative z-10 w-full h-screen">
+        {/* DESKTOP */}
         <div className="hidden md:flex w-full h-full">
           <div className="w-2/5 h-full flex flex-col items-center justify-center p-12 xl:p-16 2xl:p-20">
             <div className="max-w-md mx-auto w-full">
@@ -168,37 +207,36 @@ export default function LoginPage() {
                     </div>
                   </div>
                 </div>
-
-        
               </div>
 
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-white/50 flex items-center justify-center shadow">
-                  <span className="text-[#2B865A] font-bold text-lg">Q</span>
+                  <span className="text-[#2B865A] font-bold text-lg" style={{ fontFamily: 'Manrope, sans-serif' }}>Q</span>
                 </div>
                 <div>
-                  <h2 className="text-lg font-bold text-[#2B865A]">Qure</h2>
+                  <h2 className="text-lg font-bold text-[#2B865A]" style={{ fontFamily: 'Manrope, sans-serif' }}>Qure</h2>
                   <p className="text-sm text-[#4D7059]">Health Assistant</p>
                 </div>
               </div>
             </div>
           </div>
 
+          {/* Форма */}
           <div className="w-3/5 h-full flex items-center justify-center p-12 xl:p-16 2xl:p-20">
             <div className="w-full max-w-lg mx-auto">
               <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12">
                 <div className="mb-8">
-                  <h2 className="text-2xl xl:text-3xl font-bold text-center mb-4 text-[#222021]">
+                  <h2 className="text-2xl xl:text-3xl font-bold text-center mb-4 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Авторизация
                   </h2>
-                  <p className="text-base text-center text-[#767B78] mb-6">
+                  <p className="text-base text-center text-[#767B78] mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Введите email и пароль для входа
                   </p>
                 </div>
 
                 <div className="space-y-6">
                   <div>
-                    <label className="block text-lg font-semibold mb-3 text-[#222021]">
+                    <label className="block text-lg font-semibold mb-3 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Email
                     </label>
                     <div className="relative">
@@ -212,14 +250,14 @@ export default function LoginPage() {
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
                         className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
-                        style={{ height: '52px' }}
+                        style={{ height: '52px', fontFamily: 'Manrope, sans-serif' }}
                         placeholder="Введите ваш email"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="block text-lg font-semibold mb-3 text-[#222021]">
+                    <label className="block text-lg font-semibold mb-3 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Пароль
                     </label>
                     <div className="relative">
@@ -233,7 +271,7 @@ export default function LoginPage() {
                         onChange={handleChange}
                         onKeyPress={handleKeyPress}
                         className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 pl-12 pr-4 py-4 text-base hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white text-[#222021]"
-                        style={{ height: '52px' }}
+                        style={{ height: '52px', fontFamily: 'Manrope, sans-serif' }}
                         placeholder="Введите ваш пароль"
                       />
                     </div>
@@ -242,7 +280,7 @@ export default function LoginPage() {
 
                 {error && (
                   <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-                    <p className="text-red-600 text-sm flex items-center gap-2">
+                    <p className="text-red-600 text-sm flex items-center gap-2" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       <span>⚠</span> {error}
                     </p>
                   </div>
@@ -256,17 +294,18 @@ export default function LoginPage() {
                       ? 'bg-[#F8F8F8] text-[#D1D3D2] cursor-not-allowed'
                       : 'bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]'
                   }`}
-                  style={{ height: '56px' }}
+                  style={{ height: '56px', fontFamily: 'Manrope, sans-serif' }}
                 >
                   {isLoading ? 'Вход...' : 'Войти'}
                 </button>
 
                 <div className="text-center mt-6">
-                  <p className="text-base text-[#767B78]">
+                  <p className="text-base text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Нет аккаунта?{' '}
                     <button
                       onClick={() => navigate('/register')}
                       className="font-bold text-[#2B865A] hover:text-[#24704A] transition-colors"
+                      style={{ fontFamily: 'Manrope, sans-serif' }}
                     >
                       Зарегистрируйтесь
                     </button>
@@ -274,13 +313,13 @@ export default function LoginPage() {
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-[#F0F0F0]">
-                  <p className="text-sm text-center text-[#767B78]">
+                  <p className="text-sm text-center text-[#767B78]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Нажимая кнопку, вы соглашаетесь с{' '}
-                    <button className="text-[#2B865A] hover:underline">
+                    <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       политикой конфиденциальности
                     </button>{' '}
                     и{' '}
-                    <button className="text-[#2B865A] hover:underline">
+                    <button className="text-[#2B865A] hover:underline" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       условиями использования
                     </button>
                   </p>
@@ -290,7 +329,9 @@ export default function LoginPage() {
           </div>
         </div>
 
+        {/* MOBILE - твой код без изменений */}
         <div className="md:hidden w-full h-full">
+   <div className="md:hidden w-full h-full">
           <div className="w-full h-full" style={{
             background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
           }}>
@@ -368,6 +409,8 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
+        </div>
+
         </div>
       </div>
     </div>

@@ -55,7 +55,7 @@ export default function AccountSettingsPage() {
         <div className="w-2/5 h-full flex flex-col items-center  p-12 xl:p-16 2xl:p-20 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
             <button
-              onClick={() => navigate(-1)}
+              onClick={() => navigate('/register/success')}
               className="flex items-center gap-3 mb-12 text-[#2B865A] hover:text-[#24704A] transition-colors group"
               style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px' }}
             >
@@ -74,7 +74,7 @@ export default function AccountSettingsPage() {
               </div>
 
               <h1
-                className="text-3xl xl:text-4xl font-bold leading-tight mb-6"
+                className="text-3xl xl:text-3xl font-bold leading-tight mb-6"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -85,10 +85,10 @@ export default function AccountSettingsPage() {
               </h1>
               
               <p
-                className="text-base xl:text-lg text-[#4D7059] leading-relaxed mb-8"
+                className="text-base xl:text-base text-[#4D7059] leading-relaxed mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  lineHeight: '1.5'
+                  lineHeight: '1.3'
                 }}
               >
                 Заполните ваши персональные данные, чтобы мы могли создавать для вас полезные подборки и рекомендации
@@ -133,7 +133,7 @@ export default function AccountSettingsPage() {
           <div className="w-full max-w-2xl mx-auto">
             <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-10 xl:p-12">
               <h2
-                className="text-2xl xl:text-3xl font-bold text-center mb-8"
+                className="text-2xl xl:text-2xl font-bold text-center mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -145,7 +145,7 @@ export default function AccountSettingsPage() {
               <div className="space-y-8">
                 <div>
                   <label
-                    className="block text-lg font-semibold mb-3"
+                    className="block text-base font-semibold mb-3"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -181,7 +181,7 @@ export default function AccountSettingsPage() {
 
                 <div>
                   <label
-                    className="block text-lg font-semibold mb-3"
+                    className="block text-base font-semibold mb-3"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -192,7 +192,7 @@ export default function AccountSettingsPage() {
                   <div className="flex gap-4">
                     <button
                       onClick={() => setGender('male')}
-                      className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl border-2 transition-all duration-300 ${
+                      className={`flex-1 flex items-center justify-center gap-3 py-2 rounded-xl border-2 transition-all duration-300 ${
                         gender === 'male'
                           ? 'border-[#2B865A] bg-[#2B865A]/5 text-[#2B865A]'
                           : 'border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] text-[#635436]'
@@ -202,7 +202,7 @@ export default function AccountSettingsPage() {
                     </button>
                     <button
                       onClick={() => setGender('female')}
-                      className={`flex-1 flex items-center justify-center gap-3 py-4 rounded-xl border-2 transition-all duration-300 ${
+                      className={`flex-1 flex items-center justify-center gap-3 py-2 rounded-xl border-2 transition-all duration-300 ${
                         gender === 'female'
                           ? 'border-[#2B865A] bg-[#2B865A]/5 text-[#2B865A]'
                           : 'border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] text-[#635436]'
@@ -215,7 +215,7 @@ export default function AccountSettingsPage() {
 
                 <div>
                   <label
-                    className="block text-lg font-semibold mb-3"
+                    className="block text-base font-semibold mb-3"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',

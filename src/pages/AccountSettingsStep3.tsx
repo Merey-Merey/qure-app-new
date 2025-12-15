@@ -37,7 +37,7 @@ export default function AccountSettingsStep3() {
               </div>
 
               <h1
-                className="text-3xl xl:text-4xl font-bold leading-tight mb-6"
+                className="text-3xl xl:text-3xl font-bold leading-tight mb-6"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   color: '#222021',
@@ -48,10 +48,10 @@ export default function AccountSettingsStep3() {
               </h1>
               
               <p
-                className="text-base xl:text-lg text-[#4D7059] leading-relaxed mb-8"
+                className="text-base xl:text-base text-[#4D7059] leading-relaxed mb-8"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  lineHeight: '1.5'
+                  lineHeight: '1.3'
                 }}
               >
                 Разрешите доступ к геолокации, чтобы мы могли показывать актуальный ассортимент для вашего местоположения и предлагать ближайшие аптеки.
@@ -107,7 +107,7 @@ export default function AccountSettingsStep3() {
                 </div>
                 
                 <h2
-                  className="text-2xl xl:text-3xl font-bold mb-4"
+                  className="text-2xl xl:text-2xl font-bold mb-4"
                   style={{
                     fontFamily: 'Manrope, sans-serif',
                     color: '#222021',
@@ -117,7 +117,7 @@ export default function AccountSettingsStep3() {
                 </h2>
                 
                 <p
-                  className="text-base text-[#635436] mb-6"
+                  className="text-sm text-[#635436] mb-6"
                   style={{
                     fontFamily: 'Manrope, sans-serif',
                   }}
@@ -181,18 +181,16 @@ export default function AccountSettingsStep3() {
 
               <button
                 onClick={handleSubmit}
-                className="w-full rounded-xl px-6 py-4 text-lg font-bold transition-all duration-300 bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]"
+                className="w-full rounded-xl px-2 py-4 text-sm font-bold transition-all duration-300 bg-[#2B865A] text-white shadow hover:shadow-lg hover:scale-[1.02] hover:bg-[#24704A] active:scale-[0.98]"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
-                  height: '56px',
+                  height: '50px',
                 }}
               >
                 Разрешить и завершить
               </button>
 
-              <p className="text-center text-sm text-[#635436] mt-4" style={{ fontFamily: 'Manrope, sans-serif' }}>
-                Вы можете изменить настройки геолокации в любое время
-              </p>
+    
             </div>
           </div>
         </div>
