@@ -10,7 +10,7 @@ The application demonstrates real-world frontend architecture, API integration, 
 ## 🔗 Live Demo
 
 👉 **Production (Vercel):**
-[https://qure-app-main.vercel.app](https://qure-app.vercel.app)
+[https://qure-flax.vercel.app](https://qure-app.vercel.app)
 
 👉 **GitHub Repository:**
 [https://github.com/Merey-Merey/qure-app-new](https://github.com/Merey-Merey/qure-app-new)
