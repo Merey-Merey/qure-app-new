@@ -30,6 +30,8 @@ import { CartProvider } from './context/CartContext';
 import ProfilePage from './pages/ProfilePage';
 import PersonalDataPage from './pages/PersonalDataPage';
 import AdminProductNew from './pages/AdminProductNew';
+import CheckoutPage from './pages/CheckoutPage';
+import OrderSuccessPage from './pages/OrderSuccessPage';
 
 
 
@@ -53,6 +55,8 @@ const router = createBrowserRouter([
     { path: '/categories/:slug', element: <CategorySubcategoriesPage /> },
       { path: '/categories/:slug/:subSlug', element: <CategoryProductsPage /> },
         { path: '/cart', element: <CartPage /> },
+                { path: '/checkout', element: <CheckoutPage /> },
+                                { path: '/order-success', element: <OrderSuccessPage /> },
           { path: '/profile', element: <ProfilePage /> },
             { path: '/profile/personal', element: <PersonalDataPage /> },
               

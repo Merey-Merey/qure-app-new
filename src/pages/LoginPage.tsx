@@ -52,8 +52,8 @@ const handleLogin = async () => {
       };
       token = `user-jwt-${storedUser.id}-${Date.now()}`;
       
-      console.log('%c USER LOGIN SUCCESS', 'color: #2B865A; font-size: 16px; font-weight: bold');
-      console.table({
+      console.log('%c User Login Success');
+      console.log({
         'ID': storedUser.id,
         'Имя': storedUser.name,
         'Email': storedUser.email,
@@ -71,8 +71,8 @@ const handleLogin = async () => {
       };
       token = `admin-jwt-${Date.now()}`;
       
-      console.log('%c ADMIN LOGIN SUCCESS', 'color: #FF6B35; font-size: 16px; font-weight: bold');
-      console.table({
+      console.log('%c Admin Login Success');
+      console.log({
         'ID': 0,
         'Имя': 'Администратор',
         'Email': formData.email,
