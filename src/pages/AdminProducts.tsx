@@ -1,8 +1,7 @@
-// AdminProducts.tsx
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { API_URLS } from '../services/api';
-
+import { Search, Edit2, Trash2, Plus, RefreshCw, ArrowLeft } from 'lucide-react';
 
 interface Product {
   id: string;
@@ -48,6 +47,7 @@ const AdminProducts = () => {
       if (!response.ok) throw new Error('Ошибка загрузки товаров');
       const data = await response.json();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const normalizedData = data.map((product: any) => ({
         id: product.id || '',
         name: product.name || product.title || product.productName || product.product || 'Без названия',
@@ -73,6 +73,7 @@ const AdminProducts = () => {
       if (!response.ok) throw new Error('Ошибка загрузки категорий');
       const data = await response.json();
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const normalizedCategories = data.map((cat: any) => ({
         id: cat.id || '',
         name: cat.name || cat.title || cat.categoryName || 'Другое',
@@ -215,327 +216,294 @@ const AdminProducts = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#e7edf3] flex items-center justify-center">
+      <div className="min-h-screen bg-[#f5f7fa] flex items-center justify-center p-4">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#21a56b] mx-auto mb-4" />
-          <p className="text-[#6b7b8b] text-sm">Загрузка товаров...</p>
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#21a56b] mx-auto mb-3" />
+          <p className="text-[#6b7b8b] text-xs">Загрузка товаров...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#e7edf3] px-10 py-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Хедер */}
-        <header className="flex justify-between items-center mb-8">
+    <div className="min-h-screen bg-[#f5f7fa] p-4">
+      {/* Хедер */}
+      <header className="mb-6">
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-semibold text-[#1f2733]">
+            <h1 className="text-lg font-semibold text-[#1f2733]">
               Управление товарами
             </h1>
-            <p className="mt-1 text-sm text-[#6b7b8b]">
+            <p className="mt-1 text-xs text-[#6b7b8b]">
               Всего товаров: <span className="font-semibold">{products.length}</span>
             </p>
           </div>
-          <div className="flex gap-3">
+          <div className="flex gap-2">
             <button
               onClick={fetchProducts}
-              className="px-4 py-2 rounded-full border border-[#21a56b] text-[#21a56b] text-sm bg-white hover:bg-[#e6fff3] transition-colors shadow-sm"
+              className="p-2 rounded-full bg-white border border-[#e1e7f0] hover:bg-gray-50 transition-colors shadow-sm"
+              title="Обновить"
             >
-              Обновить
+              <RefreshCw className="w-4 h-4 text-[#6b7b8b]" />
             </button>
             <Link
               to="/admin"
-              className="px-4 py-2 rounded-full border border-[#21a56b] text-[#21a56b] text-sm bg-white hover:bg-[#e6fff3] transition-colors shadow-sm"
+              className="p-2 rounded-full bg-white border border-[#21a56b] hover:bg-[#e6fff3] transition-colors shadow-sm"
+              title="Назад"
             >
-              ← Назад в панель
+              <ArrowLeft className="w-4 h-4 text-[#21a56b]" />
             </Link>
           </div>
-        </header>
+        </div>
 
-        {/* Поиск + кнопка добавления */}
-        <section className="bg-white rounded-2xl shadow-[0_18px_45px_rgba(16,24,40,0.08)] p-6 mb-6">
-          <div className="flex flex-col md:flex-row gap-4 items-center mb-6">
-            <div className="flex-1 w-full">
-              <input
-                type="text"
-                placeholder="Поиск товаров по названию или категории..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-                className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-              />
-            </div>
-            <button
-              onClick={handleAddNew}
-              className="px-6 py-2 rounded-full bg-[#21a56b] text-white text-sm shadow-md hover:bg-[#1b8a59] transition-colors whitespace-nowrap"
+        {/* Поиск */}
+        <div className="relative mb-4">
+          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#8a96a6]" />
+          <input
+            type="text"
+            placeholder="Поиск товаров..."
+            value={search}
+            onChange={e => setSearch(e.target.value)}
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-white border border-gray-200 text-sm focus:outline-none focus:border-[#21a56b]"
+          />
+        </div>
+
+        {/* Кнопка добавления */}
+        <button
+          onClick={handleAddNew}
+          className="w-full mb-4 px-4 py-3 rounded-xl bg-[#21a56b] text-white text-sm font-medium shadow-sm hover:bg-[#1b8a59] transition-colors flex items-center justify-center gap-2"
+        >
+          <Plus className="w-4 h-4" />
+          Добавить товар
+        </button>
+      </header>
+
+      {/* Статистика */}
+      <div className="grid grid-cols-2 gap-3 mb-6">
+        <div className="bg-white rounded-xl p-3 shadow-sm">
+          <p className="text-xs text-[#8a96a6] mb-1">Всего товаров</p>
+          <p className="text-base font-semibold text-[#1f2733]">{products.length}</p>
+        </div>
+        <div className="bg-white rounded-xl p-3 shadow-sm">
+          <p className="text-xs text-[#8a96a6] mb-1">Низкий запас</p>
+          <p className="text-base font-semibold text-red-500">
+            {products.filter(p => (p.stock || 0) < 10).length}
+          </p>
+        </div>
+      </div>
+
+      {/* Список товаров */}
+      <section className="space-y-3">
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-8 bg-white rounded-xl shadow-sm">
+            <p className="text-sm text-[#8a96a6]">
+              {products.length === 0 ? 'Товары не найдены' : 'По вашему запросу ничего не найдено'}
+            </p>
+          </div>
+        ) : (
+          filteredProducts.map(product => (
+            <div
+              key={product.id}
+              className="bg-white rounded-xl p-4 shadow-sm border border-gray-100"
             >
-              + Добавить товар
-            </button>
-          </div>
-
-          {/* Таблица */}
-          {products.length === 0 ? (
-            <div className="text-center py-10 text-[#8a96a6]">
-              Товары не найдены
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-[#f3f6fa] text-[#6b7b8b]">
-                  <tr>
-                    <th className="p-3 text-left font-semibold">Товар</th>
-                    <th className="p-3 text-left font-semibold">Категория</th>
-                    <th className="p-3 text-left font-semibold">Цена</th>
-                    <th className="p-3 text-left font-semibold">Остаток</th>
-                    <th className="p-3 text-left font-semibold">Действия</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {filteredProducts.map(product => (
-                    <tr
-                      key={product.id}
-                      className="border-b border-[#edf2f7] hover:bg-[#f7fafc] transition-colors"
-                    >
-                      <td className="p-3">
-                        <div className="flex items-center gap-3">
-                          <img
-                            src={product.image || 'https://via.placeholder.com/80'}
-                            alt={product.name}
-                            className="w-10 h-10 rounded-xl object-cover border border-[#e1e7f0]"
-                            onError={e => {
-                              (e.target as HTMLImageElement).src = 'https://via.placeholder.com/80';
-                            }}
-                          />
-                          <div>
-                            <p className="font-semibold text-[#1f2733]">
-                              {product.name || 'Без названия'}
-                            </p>
-                            {product.description && (
-                              <p className="text-[11px] text-[#8a96a6] max-w-xs truncate">
-                                {product.description}
-                              </p>
-                            )}
-                            <p className="text-[11px] text-[#a0aec0]">ID: {product.id}</p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="p-3">
-                        <span className="inline-flex px-3 py-1 rounded-full bg-blue-50 text-blue-700 text-[11px]">
-                          {product.category || 'Без категории'}
-                        </span>
-                      </td>
-                      <td className="p-3 font-semibold text-[#1f2733]">
-                        {product.price?.toLocaleString() || 0} ₸
-                      </td>
-                      <td className="p-3">
-                        <span
-                          className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            (product.stock || 0) > 20
-                              ? 'bg-emerald-50 text-emerald-700'
-                              : (product.stock || 0) > 5
-                              ? 'bg-yellow-50 text-yellow-700'
-                              : 'bg-red-50 text-red-700'
-                          }`}
-                        >
-                          {product.stock || 0} шт
-                        </span>
-                      </td>
-                      <td className="p-3">
-                        <div className="flex flex-wrap gap-2">
-                          <button
-                            onClick={() => handleEdit(product)}
-                            className="px-3 py-1 rounded-full bg-[#e3e8ee] text-xs text-[#1f2733] hover:bg-[#d7dee9]"
-                          >
-                            Редактировать
-                          </button>
-                          <button
-                            onClick={() => handleDelete(product.id)}
-                            className="px-3 py-1 rounded-full bg-red-500 text-xs text-white hover:bg-red-600"
-                          >
-                            Удалить
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-
-              {filteredProducts.length === 0 && products.length > 0 && (
-                <div className="text-center py-6 text-[#8a96a6] text-sm">
-                  Товары не найдены. Измените поисковый запрос.
+              <div className="flex gap-3 mb-3">
+                <img
+                  src={product.image || 'https://via.placeholder.com/80'}
+                  alt={product.name}
+                  className="w-16 h-16 rounded-lg object-cover border border-gray-200"
+                  onError={e => {
+                    (e.target as HTMLImageElement).src = 'https://via.placeholder.com/80';
+                  }}
+                />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-sm text-[#1f2733] mb-1 truncate">
+                    {product.name || 'Без названия'}
+                  </h3>
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 text-xs">
+                      {product.category || 'Без категории'}
+                    </span>
+                    <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${
+                      (product.stock || 0) > 20
+                        ? 'bg-emerald-50 text-emerald-700'
+                        : (product.stock || 0) > 5
+                        ? 'bg-yellow-50 text-yellow-700'
+                        : 'bg-red-50 text-red-700'
+                    }`}>
+                      {product.stock || 0} шт
+                    </span>
+                  </div>
+                  <p className="font-semibold text-[#1f2733] text-sm">
+                    {product.price?.toLocaleString() || 0} ₸
+                  </p>
+                  {product.description && (
+                    <p className="text-xs text-[#8a96a6] mt-1 line-clamp-1">
+                      {product.description}
+                    </p>
+                  )}
                 </div>
-              )}
+              </div>
+
+              <div className="flex gap-2 pt-3 border-t border-gray-100">
+                <button
+                  onClick={() => handleEdit(product)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-[#edf2f7] text-xs text-[#1f2733] hover:bg-[#e1e7f0] transition-colors flex items-center justify-center gap-1"
+                >
+                  <Edit2 className="w-3 h-3" />
+                  Редактировать
+                </button>
+                <button
+                  onClick={() => handleDelete(product.id)}
+                  className="flex-1 px-3 py-2 rounded-lg bg-red-50 text-xs text-red-700 hover:bg-red-100 transition-colors flex items-center justify-center gap-1"
+                >
+                  <Trash2 className="w-3 h-3" />
+                  Удалить
+                </button>
+              </div>
             </div>
-          )}
-        </section>
+          ))
+        )}
+      </section>
 
-        {/* Нижняя статистика */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="bg-white rounded-2xl p-5 shadow-[0_18px_45px_rgba(16,24,40,0.08)]">
-            <p className="text-xs text-[#8a96a6] mb-1">Всего товаров</p>
-            <p className="text-2xl font-semibold text-[#1f2733]">{products.length}</p>
-          </div>
-          <div className="bg-white rounded-2xl p-5 shadow-[0_18px_45px_rgba(16,24,40,0.08)]">
-            <p className="text-xs text-[#8a96a6] mb-1">Низкий запас (&lt; 10)</p>
-            <p className="text-2xl font-semibold text-red-500">
-              {products.filter(p => (p.stock || 0) < 10).length}
-            </p>
-          </div>
-          <div className="bg-white rounded-2xl p-5 shadow-[0_18px_45px_rgba(16,24,40,0.08)]">
-            <p className="text-xs text-[#8a96a6] mb-1">Общая стоимость</p>
-            <p className="text-2xl font-semibold text-[#1f2733]">
-              {products
-                .reduce(
-                  (sum, p) => sum + (p.price || 0) * (p.stock || 0),
-                  0
-                )
-                .toLocaleString()}{' '}
-              ₸
-            </p>
-          </div>
-        </section>
+      {/* Модалка */}
+      {showEditModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-start justify-center p-4 z-50 overflow-y-auto">
+          <div className="bg-white rounded-xl shadow-xl w-full max-w-md mt-4 mb-4">
+            <div className="p-4">
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-base font-semibold text-[#1f2733]">
+                  {editingProduct ? 'Редактирование товара' : 'Добавление товара'}
+                </h2>
+                <button
+                  onClick={handleCancelEdit}
+                  className="text-[#8a96a6] hover:text-[#1f2733]"
+                >
+                  ×
+                </button>
+              </div>
 
-        {/* Модалка */}
-        {showEditModal && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center p-4 z-50">
-            <div className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto">
-              <div className="p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-semibold text-[#1f2733]">
-                    {editingProduct ? 'Редактирование товара' : 'Добавление товара'}
-                  </h2>
-                  <button
-                    onClick={handleCancelEdit}
-                    className="text-[#8a96a6] hover:text-[#1f2733] text-xl"
-                  >
-                    х
-                  </button>
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
+                    Название товара *
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.name}
+                    onChange={e => setEditForm({ ...editForm, name: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
+                    placeholder="Название товара"
+                  />
                 </div>
 
-                <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                      Название товара *
+                      Цена (₸) *
                     </label>
                     <input
-                      type="text"
-                      value={editForm.name}
-                      onChange={e => setEditForm({ ...editForm, name: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                      placeholder="Введите название товара"
+                      type="number"
+                      value={editForm.price}
+                      onChange={e => setEditForm({ ...editForm, price: Number(e.target.value) })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
+                      min={0}
                     />
                   </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                        Цена (₸) *
-                      </label>
-                      <input
-                        type="number"
-                        value={editForm.price}
-                        onChange={e => setEditForm({ ...editForm, price: Number(e.target.value) })}
-                        className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                        min={0}
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                        Количество на складе *
-                      </label>
-                      <input
-                        type="number"
-                        value={editForm.stock}
-                        onChange={e => setEditForm({ ...editForm, stock: Number(e.target.value) })}
-                        className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                        min={0}
-                      />
-                    </div>
-                  </div>
-
                   <div>
                     <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                      Категория
-                    </label>
-                    <select
-                      value={editForm.category}
-                      onChange={e => setEditForm({ ...editForm, category: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                    >
-                      <option value="">Выберите категорию</option>
-                      {categories.map(cat => (
-                        <option key={cat.id} value={cat.name}>
-                          {cat.name}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                      Ссылка на изображение
+                      Количество *
                     </label>
                     <input
-                      type="text"
-                      value={editForm.image}
-                      onChange={e => setEditForm({ ...editForm, image: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                      placeholder="https://example.com/image.jpg"
-                    />
-                    {editForm.image && (
-                      <div className="mt-2">
-                        <p className="text-[11px] text-[#8a96a6] mb-1">Предпросмотр:</p>
-                        <img
-                          src={editForm.image}
-                          alt="Предпросмотр"
-                          className="w-20 h-20 rounded-xl object-cover border border-[#e1e7f0]"
-                          onError={e => {
-                            (e.target as HTMLImageElement).src = 'https://via.placeholder.com/80';
-                          }}
-                        />
-                      </div>
-                    )}
-                  </div>
-
-                  <div>
-                    <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
-                      Описание товара
-                    </label>
-                    <textarea
-                      value={editForm.description}
-                      onChange={e => setEditForm({ ...editForm, description: e.target.value })}
-                      className="w-full px-4 py-2 rounded-xl border border-[#e1e7f0] text-sm focus:outline-none focus:border-[#21a56b]"
-                      rows={3}
-                      placeholder="Введите описание товара"
+                      type="number"
+                      value={editForm.stock}
+                      onChange={e => setEditForm({ ...editForm, stock: Number(e.target.value) })}
+                      className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
+                      min={0}
                     />
                   </div>
                 </div>
 
-                <div className="flex justify-end gap-3 mt-6 pt-4 border-t border-[#edf2f7]">
-                  <button
-                    onClick={handleCancelEdit}
-                    className="px-4 py-2 rounded-full border border-[#21a56b] text-[#21a56b] text-sm bg-white hover:bg-[#e6fff3] transition-colors"
+                <div>
+                  <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
+                    Категория
+                  </label>
+                  <select
+                    value={editForm.category}
+                    onChange={e => setEditForm({ ...editForm, category: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
                   >
-                    Отмена
-                  </button>
-                  <button
-                    onClick={editingProduct ? handleSaveEdit : handleSaveNew}
-                    disabled={!editForm.name || editForm.price <= 0}
-                    className={`px-6 py-2 rounded-full text-sm font-medium transition-colors ${
-                      !editForm.name || editForm.price <= 0
-                        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                        : 'bg-[#21a56b] text-white hover:bg-[#1b8a59]'
-                    }`}
-                  >
-                    {editingProduct ? 'Сохранить изменения' : 'Добавить товар'}
-                  </button>
+                    <option value="">Выберите категорию</option>
+                    {categories.map(cat => (
+                      <option key={cat.id} value={cat.name}>
+                        {cat.name}
+                      </option>
+                    ))}
+                  </select>
                 </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
+                    Ссылка на изображение
+                  </label>
+                  <input
+                    type="text"
+                    value={editForm.image}
+                    onChange={e => setEditForm({ ...editForm, image: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
+                    placeholder="https://example.com/image.jpg"
+                  />
+                  {editForm.image && (
+                    <div className="mt-2 flex items-center gap-2">
+                      <span className="text-[10px] text-[#8a96a6]">Предпросмотр:</span>
+                      <img
+                        src={editForm.image}
+                        alt="Предпросмотр"
+                        className="w-10 h-10 rounded object-cover border border-gray-300"
+                        onError={e => {
+                          (e.target as HTMLImageElement).src = 'https://via.placeholder.com/80';
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block text-xs font-medium text-[#6b7b8b] mb-1">
+                    Описание товара
+                  </label>
+                  <textarea
+                    value={editForm.description}
+                    onChange={e => setEditForm({ ...editForm, description: e.target.value })}
+                    className="w-full px-3 py-2 rounded-lg border border-gray-300 text-sm focus:outline-none focus:border-[#21a56b]"
+                    rows={2}
+                    placeholder="Описание товара"
+                  />
+                </div>
+              </div>
+
+              <div className="flex justify-end gap-2 mt-4 pt-4 border-t border-gray-200">
+                <button
+                  onClick={handleCancelEdit}
+                  className="px-4 py-2 rounded-lg border border-[#21a56b] text-[#21a56b] text-xs bg-white hover:bg-[#e6fff3] transition-colors"
+                >
+                  Отмена
+                </button>
+                <button
+                  onClick={editingProduct ? handleSaveEdit : handleSaveNew}
+                  disabled={!editForm.name || editForm.price <= 0}
+                  className={`px-4 py-2 rounded-lg text-xs font-medium transition-colors ${
+                    !editForm.name || editForm.price <= 0
+                      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                      : 'bg-[#21a56b] text-white hover:bg-[#1b8a59]'
+                  }`}
+                >
+                  {editingProduct ? 'Сохранить' : 'Добавить'}
+                </button>
               </div>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 };

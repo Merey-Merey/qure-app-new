@@ -1,4 +1,3 @@
-// src/pages/CategoryProductsPage.tsx
 import { useState, useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { type Product } from '../mocks/products';
@@ -70,25 +69,25 @@ export default function CategoryProductsPage() {
   return (
     <div className="relative w-full min-h-screen overflow-hidden bg-background">
       <div className="hidden md:flex w-full h-screen">
-        <div className="w-2/5 h-full flex flex-col items-center p-12 xl:p-16 2xl:p-20 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
-          <div className="max-w-md mx-auto w-full">
+        <div className="w-2/5 h-full flex flex-col items-center p-8 lg:p-10 xl:p-12 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
+          <div className="max-w-sm mx-auto w-full">
             <button
               onClick={() => navigate(-1)}
-              className="flex items-center gap-3 mb-12 text-[#2B865A] hover:text-[#24704A] transition-colors group"
-              style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px' }}
+              className="flex items-center gap-2 mb-8 text-[#2B865A] hover:text-[#24704A] transition-colors group text-sm"
+              style={{ fontFamily: 'Manrope, sans-serif' }}
             >
-              <ArrowLeft className="transform group-hover:-translate-x-1 transition-transform" width={20} height={20} />
+              <ArrowLeft className="transform group-hover:-translate-x-1 transition-transform" width={16} height={16} />
               Назад к подкатегориям
             </button>
 
-            <div className="mb-12">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-12 h-12 rounded-xl bg-[#2B865A]/10 flex items-center justify-center">
-                  <Filter className="text-[#2B865A]" width={24} height={24} />
+            <div className="mb-8">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
+                  <Filter className="text-[#2B865A]" width={20} height={20} />
                 </div>
                 <div>
                   <h1
-                    className="text-2xl xl:text-3xl font-bold leading-tight"
+                    className="text-xl xl:text-2xl font-bold leading-tight"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -98,7 +97,7 @@ export default function CategoryProductsPage() {
                     {subcategory.title}
                   </h1>
                   <p
-                    className="text-sm text-[#4D7059]"
+                    className="text-xs text-[#4D7059]"
                     style={{ fontFamily: 'Manrope, sans-serif' }}
                   >
                     {products.length} товар{products.length % 10 === 1 ? '' : 'ов'} в категории
@@ -107,7 +106,7 @@ export default function CategoryProductsPage() {
               </div>
               
               <p
-                className="text-base xl:text-lg text-[#4D7059] leading-relaxed mb-8"
+                className="text-sm xl:text-base text-[#4D7059] leading-relaxed mb-6"
                 style={{
                   fontFamily: 'Manrope, sans-serif',
                   lineHeight: '1.5'
@@ -116,33 +115,32 @@ export default function CategoryProductsPage() {
                 Все товары проверены на соответствие стандартам качества. Подбирайте лучшее для вашего здоровья.
               </p>
 
-              <div className="relative mb-6">
-                <div className="absolute left-4 top-1/2 transform -translate-y-1/2">
-                  <Search width={20} height={20} className="text-[#989C99]" />
+              <div className="relative mb-4">
+                <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
+                  <Search width={16} height={16} className="text-[#989C99]" />
                 </div>
                 <input
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Искать товары..."
-                  className="w-full pl-12 pr-4 py-4 rounded-xl border-2 border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white transition-colors"
+                  className="w-full pl-10 pr-3 py-3 rounded-lg border border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] focus:border-[#2B865A] focus:bg-white transition-colors text-sm"
                   style={{
                     fontFamily: 'Manrope, sans-serif',
                     color: '#222021',
-                    fontSize: '16px'
                   }}
                 />
               </div>
 
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 mb-6">
                 <div>
-                  <label className="block text-sm font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  <label className="block text-xs font-semibold mb-1.5 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                     Сортировка
                   </label>
                   <select
                     value={sortBy}
                     onChange={(e) => setSortBy(e.target.value as 'title' | 'price' | 'popularity')}
-                    className="w-full rounded-xl border-2 border-[#F0F0F0] bg-white/50 px-4 py-3 hover:border-[#2B865A] transition-colors"
+                    className="w-full rounded-lg border border-[#F0F0F0] bg-white/50 px-3 py-2 hover:border-[#2B865A] transition-colors text-sm"
                     style={{ fontFamily: 'Manrope, sans-serif' }}
                   >
                     <option value="title">По названию</option>
@@ -151,45 +149,45 @@ export default function CategoryProductsPage() {
                   </select>
                 </div>
                 
-                <button className="w-full flex items-center justify-center gap-2 py-3 rounded-xl border-2 border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] transition-colors">
-                  <Filter width={16} height={16} />
+                <button className="w-full flex items-center justify-center gap-1.5 py-2 rounded-lg border border-[#F0F0F0] bg-white/50 hover:border-[#2B865A] transition-colors text-sm">
+                  <Filter width={14} height={14} />
                   <span style={{ fontFamily: 'Manrope, sans-serif' }}>Дополнительные фильтры</span>
                 </button>
               </div>
 
-              <div className="space-y-4">
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-white/50 backdrop-blur-sm">
-                  <div className="w-10 h-10 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <div className="space-y-3">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-white/50 backdrop-blur-sm">
+                  <div className="w-8 h-8 rounded-md bg-[#2B865A]/10 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M12 1L3 5V11C3 16.55 6.84 21.74 12 23C17.16 21.74 21 16.55 21 11V5L12 1Z" 
                         stroke="#2B865A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#222021]">Гарантия качества</h3>
-                    <p className="text-sm text-[#4D7059]">Все товары сертифицированы</p>
+                    <h3 className="font-semibold text-[#222021] text-sm">Гарантия качества</h3>
+                    <p className="text-xs text-[#4D7059]">Все товары сертифицированы</p>
                   </div>
                 </div>
                 
-                <div className="flex items-center gap-4 p-4 rounded-xl bg-white/50 backdrop-blur-sm">
-                  <div className="w-10 h-10 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div className="flex items-center gap-3 p-3 rounded-lg bg-white/50 backdrop-blur-sm">
+                  <div className="w-8 h-8 rounded-md bg-[#2B865A]/10 flex items-center justify-center">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path d="M21 10C21 17 12 23 12 23C12 23 3 17 3 10C3 7.61305 3.94821 5.32387 5.63604 3.63604C7.32387 1.94821 9.61305 1 12 1C14.3869 1 16.6761 1.94821 18.364 3.63604C20.0518 5.32387 21 7.61305 21 10Z" 
                         stroke="#2B865A" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-[#222021]">Доставка по городу</h3>
-                    <p className="text-sm text-[#4D7059]">Бесплатно при заказе от 10 000 ₸</p>
+                    <h3 className="font-semibold text-[#222021] text-sm">Доставка по городу</h3>
+                    <p className="text-xs text-[#4D7059]">Бесплатно при заказе от 10 000 ₸</p>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-white/50 flex items-center justify-center shadow">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-white/50 flex items-center justify-center shadow">
                 <span 
-                  className="text-[#2B865A] font-bold text-lg"
+                  className="text-[#2B865A] font-bold text-base"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
                   Q
@@ -197,41 +195,41 @@ export default function CategoryProductsPage() {
               </div>
               <div>
                 <h2 
-                  className="text-lg font-bold text-[#2B865A]"
+                  className="text-base font-bold text-[#2B865A]"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
                   Qure
                 </h2>
-                <p className="text-sm text-[#4D7059]">Health Assistant</p>
+                <p className="text-xs text-[#4D7059]">Health Assistant</p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="w-3/5 h-full flex items-center justify-center p-12 xl:p-16 2xl:p-20">
-          <div className="w-full max-w-6xl mx-auto">
-            <div className="w-full rounded-2xl bg-white/90 backdrop-blur-sm shadow-xl border border-white/20 p-8">
-              <div className="flex items-center justify-between mb-8">
+        <div className="w-3/5 h-full flex items-center justify-center p-8 lg:p-10 xl:p-12">
+          <div className="w-full max-w-5xl mx-auto">
+            <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6">
+              <div className="flex items-center justify-between mb-6">
                 <div>
                   <h2
-                    className="text-2xl xl:text-3xl font-bold"
+                    className="text-xl xl:text-2xl font-bold"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
                     }}
                   >
                     Все товары
-                    <span className="text-lg font-normal text-[#4D7059] ml-2">
+                    <span className="text-sm font-normal text-[#4D7059] ml-2">
                       ({filteredProducts.length} найдено)
                     </span>
                   </h2>
-                  <div className="flex items-center gap-2 mt-2">
-                    <MapPin width={16} height={16} className="text-[#4D7059]" />
-                    <span className="text-sm text-[#4D7059]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                  <div className="flex items-center gap-1.5 mt-1.5">
+                    <MapPin width={14} height={14} className="text-[#4D7059]" />
+                    <span className="text-xs text-[#4D7059]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       г. Алматы
                     </span>
-                    <div className="ml-4 px-3 py-1 rounded-full bg-[#E7F0EA] border border-[#2B865A]/20">
-                      <span className="text-sm font-semibold text-[#2B865A]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    <div className="ml-3 px-2 py-0.5 rounded-full bg-[#E7F0EA] border border-[#2B865A]/20">
+                      <span className="text-xs font-semibold text-[#2B865A]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                         170 Q
                       </span>
                     </div>
@@ -241,7 +239,7 @@ export default function CategoryProductsPage() {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="px-4 py-2 rounded-xl border-2 border-[#F0F0F0] hover:border-[#2B865A] transition-colors"
+                    className="px-3 py-1.5 rounded-lg border border-[#F0F0F0] hover:border-[#2B865A] transition-colors text-sm"
                     style={{ fontFamily: 'Manrope, sans-serif' }}
                   >
                     Сбросить поиск
@@ -250,15 +248,15 @@ export default function CategoryProductsPage() {
               </div>
 
               {filteredProducts.length === 0 ? (
-                <div className="text-center py-16">
-                  <div className="mb-8">
-                    <svg className="w-24 h-24 mx-auto text-[#E0EFBD]" fill="currentColor" viewBox="0 0 20 20">
+                <div className="text-center py-12">
+                  <div className="mb-6">
+                    <svg className="w-20 h-20 mx-auto text-[#E0EFBD]" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 2a8 8 0 100 16 8 8 0 000-16zM4 10a6 6 0 1112 0 6 6 0 01-12 0z" clipRule="evenodd" />
                       <path fillRule="evenodd" d="M10 12a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                     </svg>
                   </div>
                   <h3
-                    className="text-xl font-bold mb-4"
+                    className="text-lg font-bold mb-3"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       color: '#222021',
@@ -267,7 +265,7 @@ export default function CategoryProductsPage() {
                     Товары не найдены
                   </h3>
                   <p
-                    className="text-lg text-[#4D7059] mb-8 max-w-md mx-auto"
+                    className="text-sm text-[#4D7059] mb-6 max-w-md mx-auto"
                     style={{
                       fontFamily: 'Manrope, sans-serif',
                       lineHeight: '1.5'
@@ -278,35 +276,35 @@ export default function CategoryProductsPage() {
                 </div>
               ) : (
                 <>
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
                       <button
-                        className="flex items-center gap-2 px-4 py-2 rounded-xl border-2 border-[#F0F0F0] bg-white hover:border-[#2B865A] transition-colors"
+                        className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-[#F0F0F0] bg-white hover:border-[#2B865A] transition-colors text-sm"
                         style={{ fontFamily: 'Manrope, sans-serif' }}
                       >
-                        <Filter width={16} height={16} />
+                        <Filter width={14} height={14} />
                         Фильтры
                       </button>
                       <div className="relative">
                         <select
                           value={sortBy}
                           onChange={(e) => setSortBy(e.target.value as 'title' | 'price' | 'popularity')}
-                          className="px-4 py-2 rounded-xl border-2 border-[#F0F0F0] bg-white hover:border-[#2B865A] transition-colors appearance-none pr-8"
+                          className="px-3 py-1.5 rounded-lg border border-[#F0F0F0] bg-white hover:border-[#2B865A] transition-colors appearance-none pr-7 text-sm"
                           style={{ fontFamily: 'Manrope, sans-serif' }}
                         >
                           <option value="title">По названию</option>
                           <option value="price">По цене</option>
                           <option value="popularity">По популярности</option>
                         </select>
-                        <Sort className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" width={16} height={16} />
+                        <Sort className="absolute right-2.5 top-1/2 transform -translate-y-1/2 pointer-events-none" width={14} height={14} />
                       </div>
                     </div>
-                    <p className="text-sm text-[#4D7059]" style={{ fontFamily: 'Manrope, sans-serif' }}>
+                    <p className="text-xs text-[#4D7059]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Показано {sortedProducts.length} из {products.length} товаров
                     </p>
                   </div>
                   
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {sortedProducts.map((product) => (
                       <div
                         key={product.id}
@@ -324,18 +322,23 @@ export default function CategoryProductsPage() {
         </div>
       </div>
 
-      <div className="md:hidden w-full h-full">
-        <div className="flex min-h-screen w-full items-center justify-center bg-background">
-          <div className="w-[390px] h-[750px] overflow-y-hidden relative overflow-hidden shadow-xl">
-            <div style={{
-              backgroundColor: '#2B865A',
-              borderBottomLeftRadius: '32px',
-              borderBottomRightRadius: '32px',
-              paddingTop: '46px',
-              paddingBottom: '24px',
-              paddingLeft: '16px',
-              paddingRight: '16px',
-            }}>
+      <div className=" min-h-[38vh] lg:hidden flex w-full items-center justify-center bg-background">
+        <div
+          className="w-[390px] h-[100vh] overflow-y-hidden relative overflow-x-hidden shadow-xl"
+          style={{
+            background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
+          }}
+        >
+          <div className="h-full overflow-y-auto pb-[80px]">
+            <div
+              style={{
+                backgroundColor: '#2B865A',
+                paddingTop: '10px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+              }}
+            >
               <button
                 type="button"
                 onClick={() => navigate(-1)}
@@ -360,7 +363,7 @@ export default function CategoryProductsPage() {
               }}>
                 г. Алматы
               </div>
-              <button type="button" className="flex items-center gap-1 px-2 rounded-[16px] bg-[#E7F0EA] border border-white/40 ml-auto" style={{marginTop: 8}}>
+              <button type="button" className="flex items-center gap-1 px-2 rounded-[16px] bg-[#E7F0EA] border border-white/40 ml-auto" style={{marginTop: -20}}>
                 <span style={{
                   fontFamily: 'Manrope, sans-serif',
                   fontWeight: 600,

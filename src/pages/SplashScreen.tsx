@@ -18,16 +18,16 @@ export default function SplashScreen() {
         background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
       }}
     >
-      <div className="w-full h-screen flex flex-col items-center justify-center p-12 lg:p-16 xl:p-20">
-        <div className="flex flex-col items-center justify-center space-y-12 w-full max-w-4xl mx-auto">
-                    <img
+      <div className="w-full h-screen flex flex-col items-center justify-center p-8 md:p-10 lg:p-12">
+        <div className="flex flex-col items-center justify-center space-y-8 w-full max-w-3xl mx-auto">
+          <img
             src="/assets/images/logo.png" 
             alt="Qure Logo"
-            className="h-32 w-32 lg:h-40 lg:w-40 xl:h-40 xl:w-40 object-contain"
+            className="h-20 w-20 md:h-24 md:w-24 lg:h-28 lg:w-28 object-contain"
           />
           
           <h1
-            className="text-[62px] lg:text-[80px] xl:text-[70px] font-bold leading-[90%] tracking-[-0.03em] text-center px-8 lg:px-12"
+            className="text-[48px] md:text-[56px] lg:text-[60px] font-bold leading-[90%] tracking-[-0.03em] text-center px-6 md:px-8"
             style={{
               fontFamily: 'Manrope, sans-serif',
               color: '#2B865A',
@@ -41,22 +41,22 @@ export default function SplashScreen() {
       <style>{`
         @media (max-width: 1023px) {
           .desktop-first {
-            padding: 2rem 1rem !important;
+            padding: 1.5rem 1rem !important;
           }
           .logo-mobile {
-            height: 80px !important;
-            width: 80px !important;
+            height: 64px !important;
+            width: 64px !important;
           }
           .title-mobile {
-            font-size: 48px !important;
+            font-size: 36px !important;
             line-height: 95% !important;
-            padding-left: 1rem !important;
-            padding-right: 1rem !important;
+            padding-left: 0.75rem !important;
+            padding-right: 0.75rem !important;
           }
         }
         @media (max-width: 640px) {
           .title-mobile {
-            font-size: 40px !important;
+            font-size: 32px !important;
           }
         }
       `}</style>

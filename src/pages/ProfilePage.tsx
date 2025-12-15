@@ -1,4 +1,4 @@
-// src/pages/ProfilePage.tsx - КОМПАКТНЫЙ ДИЗАЙН
+// src/pages/ProfilePage.tsx 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -66,9 +66,7 @@ export default function ProfilePage() {
 
   return (
     <div className="w-full min-h-screen bg-background">
-      {/* ✅ ДЕСКТОП - КОМПАКТНАЯ */}
       <div className="hidden lg:flex w-full h-screen">
-        {/* Левая колонка */}
         <div className="w-1/3 h-full flex flex-col items-center p-6 xl:p-8 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
             <button
@@ -260,15 +258,14 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* ✅ МОБИЛЬНАЯ - КОМПАКТНАЯ */}
-      <div className="lg:hidden flex min-h-screen w-full items-center justify-center bg-background">
-        <div className="w-[390px] h-[844px] overflow-y-auto relative shadow-xl bg-white">
+       <div className="lg:hidden flex min-h-[82vh] w-full items-center justify-center bg-background overflow-hidden ">
+        <div className="w-full h-full pb-20">
           <div style={{
             backgroundColor: '#2B865A',
             borderBottomLeftRadius: '24px',
             borderBottomRightRadius: '24px',
-            paddingTop: '40px',
-            paddingBottom: '20px',
+            paddingTop: '20px',
+            paddingBottom: '10px',
             paddingLeft: '16px',
             paddingRight: '16px',
           }}>
@@ -282,11 +279,7 @@ export default function ProfilePage() {
               </div>
             </div>
             
-            <div className="bg-white/90 rounded-xl p-3">
-              <h1 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '18px', fontWeight: 700, color: '#222021' }}>
-                Личный кабинет
-              </h1>
-            </div>
+          
           </div>
 
           <div className="p-3 space-y-3 pb-20">
@@ -415,7 +408,6 @@ export default function ProfilePage() {
             </button>
           </div>
 
-          {/* ✅ МОБИЛЬНАЯ НАВИГАЦИЯ - КОМПАКТНАЯ */}
           <div className="absolute bottom-0 left-0 right-0 flex items-center justify-around" style={{
             height: '68px',
             padding: '8px 12px 16px',

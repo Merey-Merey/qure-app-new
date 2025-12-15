@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle, ShoppingBag } from 'iconoir-react';
+import { CheckCircle, Heart, ShoppingBag } from 'iconoir-react';
 
 interface AccountCreatedPageProps {
   onContinue: () => void;
@@ -73,6 +73,7 @@ export default function AccountCreatedPage({ onContinue }: AccountCreatedPagePro
                 <div className="grid grid-cols-2 gap-6 mb-12">
                   <div className="flex flex-col p-6 rounded-2xl bg-white/30 backdrop-blur-sm">
                     <div className="w-12 h-12 rounded-xl bg-[#2B865A]/10 flex items-center justify-center mb-4">
+                                              <Heart className="text-[#2B865A]" width={24} height={24} />
                     </div>
                     <h3 className="font-semibold text-[#222021] text-base mb-2">Персональные рекомендации</h3>
                     <p className="text-sm text-[#4D7059]">Подходящие товары именно для вас</p>

@@ -24,11 +24,11 @@ export default function AccountUpdated() {
       }
     }
 
-    // const timer = setTimeout(() => {
-    //   navigate('/main-page');
-    // }, 5000);
+    const timer = setTimeout(() => {
+      navigate('/main-page');
+    }, 5000);
 
-    // return () => clearTimeout(timer);
+    return () => clearTimeout(timer);
   }, [navigate]);
   
   return (
@@ -221,11 +221,7 @@ export default function AccountUpdated() {
             }}
           >
             <div className="flex h-full flex-col">
-              <div className="flex justify-center mb-6">
-                <div className="w-20 h-20 rounded-full bg-[#2B865A]/10 flex items-center justify-center">
-                  <CheckCircle className="text-[#2B865A]" width={40} height={40} />
-                </div>
-              </div>
+            
               <h1
                 className="mb-2 text-center"
                 style={{

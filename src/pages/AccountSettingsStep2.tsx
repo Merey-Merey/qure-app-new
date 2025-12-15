@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { ArrowLeft, Bell,  Heart } from 'iconoir-react';
+import { Tag } from 'lucide-react';
 
 export default function AccountSettingsStep2() {
   const navigate = useNavigate();
@@ -139,6 +140,7 @@ export default function AccountSettingsStep2() {
                 <div className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-[#2B865A] transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
+                                                                  <Heart className="text-[#2B865A]" width={24} height={24} />
                     </div>
                     <div>
                       <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -166,6 +168,7 @@ export default function AccountSettingsStep2() {
                 <div className="flex items-center justify-between p-4 rounded-xl border border-gray-100 hover:border-[#2B865A] transition-colors">
                   <div className="flex items-center gap-4">
                     <div className="w-12 h-12 rounded-lg bg-[#2B865A]/10 flex items-center justify-center">
+                          <Tag className="text-[#2B865A]" width={24} height={24} />
                     </div>
                     <div>
                       <h3 className="text-base font-semibold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>

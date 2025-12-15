@@ -300,21 +300,23 @@ export default function CartPage() {
           </div>
         </div>
       </div>
-
-      {/* ✅ МОБИЛЬНАЯ ВЕРСИЯ - КОМПАКТНАЯ */}
-      <div className="lg:hidden w-full min-h-screen bg-background">
-        <div className="flex min-h-screen w-full items-center justify-center">
-          <div className="w-[390px] h-[844px] overflow-y-auto relative shadow-xl bg-white">
-            {/* Мобильный хедер */}
-            <div style={{
-              backgroundColor: '#2B865A',
-              borderBottomLeftRadius: '24px',
-              borderBottomRightRadius: '24px',
-              paddingTop: '40px',
-              paddingBottom: '20px',
-              paddingLeft: '16px',
-              paddingRight: '16px',
-            }}>
+  <div className=" min-h-[38vh] lg:hidden flex w-full items-center justify-center bg-background">
+        <div
+          className="w-[390px] h-[100vh] overflow-y-hidden relative overflow-x-hidden shadow-xl"
+          style={{
+            background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
+          }}
+        >
+          <div className="h-full overflow-y-auto pb-[80px]">
+            <div
+              style={{
+                backgroundColor: '#2B865A',
+                paddingTop: '40px',
+                paddingBottom: '16px',
+                paddingLeft: '16px',
+                paddingRight: '16px',
+              }}
+            >
               <div className="flex items-center justify-between mb-3">
                 <button onClick={() => navigate(-1)} className="flex items-center gap-1.5">
                   <ArrowLeft width={18} height={18} style={{ color: 'white' }} />
@@ -322,18 +324,6 @@ export default function CartPage() {
                 </button>
                 <div style={{ fontFamily: 'Manrope, sans-serif', color: '#FFFFFFCC', fontSize: '13px' }}>
                   г. Алматы
-                </div>
-              </div>
-              
-              <div className="bg-white/90 rounded-xl p-3">
-                <h1 style={{ fontFamily: 'Manrope, sans-serif', fontSize: '18px', fontWeight: 700, color: '#222021', marginBottom: '6px' }}>
-                  Корзина
-                </h1>
-                <div className="flex items-center justify-between">
-                  <span style={{ fontFamily: 'Manrope, sans-serif', color: '#635436', fontSize: '13px' }}>{items.length} товаров</span>
-                  <span style={{ fontFamily: 'Manrope, sans-serif', fontSize: '16px', fontWeight: 700, color: '#2B865A' }}>
-                    {total.toFixed(0)} ₸
-                  </span>
                 </div>
               </div>
             </div>
@@ -408,7 +398,6 @@ export default function CartPage() {
               )}
             </div>
 
-            {/* ✅ МОБИЛЬНАЯ НАВИГАЦИЯ - КОМПАКТНАЯ */}
             <div className="absolute bottom-0 left-0 right-0 flex items-center justify-around" style={{
               height: '68px',
               padding: '8px 12px 16px',
@@ -444,7 +433,6 @@ export default function CartPage() {
               ))}
             </div>
 
-            {/* ✅ КНОПКА ОФОРМЛЕНИЯ МОБИЛЬНАЯ */}
             {!isEmpty && (
               <div className="absolute bottom-20 left-3 right-3">
                 <button

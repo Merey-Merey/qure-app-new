@@ -618,8 +618,8 @@ export default function PersonalDataPage() {
       </div>
 
       {/* MOBILE - КОМПАКТНАЯ */}
-      <div className="lg:hidden flex min-h-screen w-full items-center justify-center bg-background">
-        <div className="w-[390px] h-[750px] overflow-y-auto shadow-xl relative bg-white">
+      <div className="lg:hidden flex min-h-[82vh] w-full items-center justify-center bg-background">
+        <div className="w-full h-full overflow-y-auto pb-20">
           {/* header */}
           <div className="flex h-[52px] items-center px-3 pt-6 bg-white border-b border-[#F8F8F8]">
             <button onClick={() => navigate('/profile')} aria-label="Назад">

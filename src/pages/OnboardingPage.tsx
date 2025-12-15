@@ -214,7 +214,7 @@ export default function OnboardingPage() {
 
         <div className="md:hidden w-full h-full overflow-hidden">
           <div className="flex h-full flex-col justify-between p-4 pb-4">
-            <div className="flex-1 flex flex-col items-center translate-y-4">
+            <div className="flex-1 flex flex-col items-center translate-y-4 mt-[15vh]">
               <img
                 src={onboardingSlides[currentSlide].image}
                 alt="Onboarding"

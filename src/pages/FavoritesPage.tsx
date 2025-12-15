@@ -48,7 +48,6 @@ export default function FavoritesPage() {
   return (
     <div className="w-full min-h-screen bg-background">
       <div className="hidden lg:flex w-full min-h-screen">
-        {/* ✅ ЛЕВАЯ ПАНЕЛЬ - КОМПАКТНАЯ */}
         <div className="w-1/3 h-full flex flex-col items-center p-6 xl:p-8 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
             <button onClick={() => navigate(-1)} className="flex items-center gap-2 mb-6 text-[#2B865A] hover:text-[#24704A] transition-colors group text-sm" style={{ fontFamily: 'Manrope, sans-serif' }}>
@@ -56,7 +55,6 @@ export default function FavoritesPage() {
               Назад
             </button>
 
-            {/* ✅ СТАТИСТИКА ИЗБРАННОГО */}
             <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-sm mb-6">
               <h2 className="text-base font-bold mb-3" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>
                 Ваши избранные товары
@@ -225,10 +223,9 @@ export default function FavoritesPage() {
         </div>
       </div>
 
-      {/* ✅ МОБИЛЬНАЯ ВЕРСИЯ - КОМПАКТНАЯ */}
-      <div className="lg:hidden flex min-h-screen w-full items-center justify-center bg-background">
+      <div className=" min-h-[38vh] lg:hidden flex w-full items-center justify-center bg-background">
         <div
-          className="w-[390px] h-[750px] overflow-y-hidden relative overflow-hidden shadow-xl"
+          className="w-[390px] h-[100vh] overflow-y-hidden relative overflow-x-hidden shadow-xl"
           style={{
             background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',
           }}
@@ -243,17 +240,7 @@ export default function FavoritesPage() {
                 paddingRight: '16px',
               }}
             >
-              <h1
-                className="text-center mb-3"
-                style={{
-                  fontFamily: 'Manrope, sans-serif',
-                  fontSize: '18px',
-                  fontWeight: 600,
-                  color: '#FFFFFF',
-                }}
-              >
-                Избранные товары
-              </h1>
+              
 
               <div
                 className="flex items-center gap-2 px-3"
