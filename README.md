@@ -71,6 +71,9 @@ This project focuses on **UX clarity, accessibility, and real CRUD logic**.
 * View product list
 * Create / Edit / Delete products
 * Manage core entities
+* Email: admin@qure.kz
+* Password: admin123
+
 
 Access control is enforced via **token-based authentication** and **protected routes**.
 
