@@ -85,7 +85,7 @@ export default function ProductPage() {
 
             <div className="mb-8">
               <div className="flex items-start gap-4 mb-6">
-                <div className="w-24 h-24 rounded-xl overflow-hidden bg-white shadow-md flex-shrink-0">
+                <div className="w-24 h-24 rounded-xl  bg-white shadow-md flex-shrink-0">
                   <img src={product.image} alt={product.title} className="w-full h-full object-contain" />
                 </div>
                 <div className="flex-1 min-w-0">
@@ -182,7 +182,7 @@ export default function ProductPage() {
         </div>
 
         <div className="w-3/5 h-full flex items-center justify-center p-8 lg:p-10">
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto h-[90%]">
             <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6">
               <div className="mb-6">
                 <div className="flex gap-4 border-b border-[#F0F0F0] pb-3">
@@ -319,7 +319,7 @@ export default function ProductPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {categories.map((cat) => (
                     <button key={cat.id} onClick={() => navigate(`/categories/${cat.slug}`)} className="group relative rounded-lg bg-white border border-[#F0F0F0] p-3 hover:border-[#2B865A] hover:shadow-md transition-all duration-300">
-                      <div className="aspect-square mb-2 overflow-hidden rounded-lg">
+                      <div className="aspect-square mb-2  rounded-lg">
                         <img src={cat.image} alt={cat.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                       </div>
                       <h3 className="text-sm font-semibold text-center truncate" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>

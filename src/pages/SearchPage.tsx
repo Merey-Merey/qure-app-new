@@ -111,7 +111,7 @@ export default function SearchPage() {
   }
 
   return (
-    <div className="relative w-full min-h-screen overflow-hidden bg-background">
+    <div className="relative w-full min-h-screen  bg-background">
       <div className="hidden md:flex w-full h-screen">
         <div className="w-2/5 h-full flex flex-col items-center p-8 lg:p-10 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-sm mx-auto w-full">
@@ -223,7 +223,7 @@ export default function SearchPage() {
         </div>
 
         <div className="w-3/5 h-full flex items-center justify-center p-8 lg:p-10">
-          <div className="w-full max-w-4xl mx-auto">
+          <div className="w-full max-w-4xl mx-auto h-[90%]">
             <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6">
               <div className="relative mb-6">
                 <div className="absolute left-3 top-1/2 transform -translate-y-1/2">
@@ -395,7 +395,7 @@ export default function SearchPage() {
                           onClick={() => navigate(`/categories/${cat.slug}`)}
                           className="group relative rounded-lg bg-white border border-[#F0F0F0] p-4 hover:border-[#2B865A] hover:shadow-md transition-all duration-300"
                         >
-                          <div className="aspect-square mb-3 overflow-hidden rounded-lg">
+                          <div className="aspect-square mb-3  rounded-lg">
                             <img
                               src={cat.image}
                               alt={cat.title}
