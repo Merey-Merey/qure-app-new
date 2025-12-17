@@ -16,7 +16,6 @@ const AdminDashboard = () => {
   const location = useLocation();
   const [exportLoading, setExportLoading] = useState({ pdf: false, excel: false });
 
-  // Нижняя навигация
   const navItems = [
     { path: '/admin', label: 'Главная', icon: Home, active: location.pathname === '/admin' },
     { path: '/admin/products', label: 'Товары', icon: Package, active: location.pathname.includes('/admin/products') },
@@ -27,10 +26,8 @@ const AdminDashboard = () => {
     try {
       setExportLoading(prev => ({ ...prev, pdf: true }));
       
-      // Имитация генерации PDF
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // В реальном приложении здесь будет запрос к API
       const reportData = {
         title: `Отчет администратора ${new Date().toLocaleDateString('ru-RU')}`,
         user: user?.name || user?.email,
@@ -43,7 +40,6 @@ const AdminDashboard = () => {
         generatedAt: new Date().toISOString()
       };
       
-      // Создаем и скачиваем PDF (в реальности с сервера)
       const blob = new Blob([JSON.stringify(reportData, null, 2)], { type: 'application/json' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
@@ -67,10 +63,8 @@ const AdminDashboard = () => {
     try {
       setExportLoading(prev => ({ ...prev, excel: true }));
       
-      // Имитация генерации Excel
       await new Promise(resolve => setTimeout(resolve, 1500));
       
-      // Создаем CSV как простую имитацию Excel
       const csvContent = `Отчет администратора,${new Date().toLocaleDateString('ru-RU')}
 Пользователь,${user?.name || user?.email}
 Дата генерации,${new Date().toLocaleString('ru-RU')}
@@ -102,7 +96,6 @@ const AdminDashboard = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f7fa]">
-      {/* Хедер */}
       <header className="sticky top-0 z-10 bg-white px-4 py-4 shadow-sm">
         <div className="flex items-center justify-between">
           <button
@@ -130,7 +123,6 @@ const AdminDashboard = () => {
       </header>
 
       <main className="px-4 py-5">
-        {/* Быстрые действия */}
         <div className="mb-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-semibold text-gray-900">Быстрые действия</h2>
@@ -166,11 +158,7 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-       
-       
-
-        {/* Основные разделы */}
-        <div className="mb-8">
+               <div className="mb-8">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Управление</h2>
           
           <div className="space-y-3">
@@ -208,7 +196,6 @@ const AdminDashboard = () => {
           </div>
         </div>
 
-        {/* Экспорт и соцсети */}
         <div className="mb-20">
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Экспорт</h2>
           
@@ -277,7 +264,6 @@ const AdminDashboard = () => {
         </div>
       </main>
 
-      {/* Нижняя навигация */}
       <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 px-4 py-3">
         <div className="flex justify-around items-center">
           {navItems.map((item) => (

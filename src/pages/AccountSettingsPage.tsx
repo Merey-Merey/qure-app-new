@@ -293,7 +293,6 @@ export default function AccountSettingsPage() {
 
       <div className="md:hidden w-full h-full">
         <div className="w-[390px] h-[844px] border-[3px] overflow-y-auto rounded-[30px] border-divider-green-first shadow-xl relative mx-auto">
-          {/* Мобильный код остается без изменений */}
           <div
             className="flex h-[40px] w-full items-center px-4 pt-8"
             style={{

@@ -1,4 +1,3 @@
-// src/components/ProtectedRoute.tsx
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../context/useAuth';
 
@@ -21,8 +20,6 @@ const ProtectedRoute = ({ children, allowedRoles = ['user', 'admin'] }: Protecte
   if (!allowedRoles.includes(user.role)) {
     return <Navigate to="/main-page" replace />;
   }
-
-  // Все проверки пройдены — показываем запрошенную страницу
   return <>{children}</>;
 };
 

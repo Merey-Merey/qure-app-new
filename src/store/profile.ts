@@ -1,4 +1,3 @@
-// src/store/profile.ts
 import { create } from 'zustand';
 
 type Profile = {

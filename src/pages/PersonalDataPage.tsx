@@ -188,9 +188,7 @@ export default function PersonalDataPage() {
 
   return (
     <div className="w-full min-h-screen bg-background">
-      {/* DESKTOP - КОМПАКТНАЯ */}
       <div className="hidden lg:flex w-full min-h-screen">
-        {/* Левая колонка */}
         <div className="w-2/5 h-full flex flex-col items-center p-6 xl:p-8 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
             <button
@@ -280,7 +278,6 @@ export default function PersonalDataPage() {
           </div>
         </div>
 
-        {/* Правая колонка */}
         <div className="w-3/5 h-full flex items-center justify-center p-6 xl:p-8">
           <div className="w-full max-w-2xl mx-auto">
             <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6 xl:p-8">
@@ -295,7 +292,6 @@ export default function PersonalDataPage() {
               </h2>
 
               <div className="space-y-6">
-                {/* Фото профиля */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-3"
@@ -381,7 +377,6 @@ export default function PersonalDataPage() {
                   </div>
                 </div>
 
-                {/* Имя */}
                 <div>
                   <label
                     className="block text-base font-semibold mb-2"
@@ -417,7 +412,6 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
-                {/* Город */}
                 <div>
                   <label
                     className="block text-sm font-semibold mb-2"
@@ -453,7 +447,6 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
-                {/* Телефон */}
                 <div>
                   <label
                     className="block text-sm font-semibold mb-2"
@@ -489,7 +482,6 @@ export default function PersonalDataPage() {
                   )}
                 </div>
 
-                {/* Пол */}
                 <div>
                   <label
                     className="block text-sm font-semibold mb-2"
@@ -542,7 +534,6 @@ export default function PersonalDataPage() {
                   </div>
                 </div>
 
-                {/* Дата рождения */}
                 <div>
                   <label
                     className="block text-sm font-semibold mb-2"
@@ -617,10 +608,8 @@ export default function PersonalDataPage() {
         </div>
       </div>
 
-      {/* MOBILE - КОМПАКТНАЯ */}
       <div className="lg:hidden flex min-h-[82vh] w-full items-center justify-center bg-background">
         <div className="w-full h-full overflow-y-auto pb-20">
-          {/* header */}
           <div className="flex h-[52px] items-center px-3 pt-6 bg-white border-b border-[#F8F8F8]">
             <button onClick={() => navigate('/profile')} aria-label="Назад">
               <ArrowLeft width={18} height={18} style={{ color: '#635436' }} />
@@ -638,7 +627,6 @@ export default function PersonalDataPage() {
           </div>
 
           <div className="p-4 space-y-4 pt-6">
-            {/* Фото */}
             <div className="flex items-center gap-3 mb-4">
               <div className="w-16 h-16 rounded-full bg-[#E7F0EA] flex items-center justify-center overflow-hidden">
                 {avatarPreview ? (
@@ -708,7 +696,6 @@ export default function PersonalDataPage() {
               </div>
             </div>
 
-            {/* Имя */}
             <div>
               <label
                 className="block mb-1.5 text-sm font-semibold"
@@ -741,7 +728,6 @@ export default function PersonalDataPage() {
               )}
             </div>
 
-            {/* Город */}
             <div>
               <label
                 className="block mb-1.5 text-sm font-semibold"
@@ -774,7 +760,6 @@ export default function PersonalDataPage() {
               )}
             </div>
 
-            {/* Телефон */}
             <div>
               <label
                 className="block mb-1.5 text-sm font-semibold"
@@ -807,7 +792,6 @@ export default function PersonalDataPage() {
               )}
             </div>
 
-            {/* Пол */}
             <div>
               <label
                 className="block mb-1.5 text-sm font-semibold"
@@ -847,7 +831,6 @@ export default function PersonalDataPage() {
               </div>
             </div>
 
-            {/* Дата рождения */}
             <div>
               <label
                 className="block mb-1.5 text-sm font-semibold"

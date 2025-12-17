@@ -100,9 +100,7 @@ export default function RegisterPage() {
       </div>
 
       <div className="relative z-10 w-full h-screen">
-        {/* DESKTOP - Уменьшено */}
         <div className="hidden md:flex w-full h-full">
-          {/* Левая колонка */}
           <div className="w-2/5 h-full flex flex-col items-center justify-center p-8 lg:p-10">
             <div className="max-w-sm mx-auto w-full">
               <button
@@ -172,7 +170,6 @@ export default function RegisterPage() {
             </div>
           </div>
 
-          {/* Правая колонка - форма */}
           <div className="w-3/5 h-full flex items-center justify-center p-8 lg:p-10">
             <div className="w-full max-w-sm mx-auto">
               <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6 lg:p-8">
@@ -186,7 +183,6 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="space-y-4">
-                  {/* Имя */}
                   <div>
                     <label className="block text-base font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Имя
@@ -208,7 +204,6 @@ export default function RegisterPage() {
                     </div>
                   </div>
 
-                  {/* Email */}
                   <div>
                     <label className="block text-base font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Email
@@ -230,7 +225,6 @@ export default function RegisterPage() {
                     </div>
                   </div>
 
-                  {/* Пароль */}
                   <div>
                     <label className="block text-base font-semibold mb-2 text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>
                       Пароль
@@ -305,7 +299,6 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        {/* MOBILE - Уменьшено */}
         <div className="md:hidden w-full h-full">
           <div className="w-full h-full" style={{
             background: 'linear-gradient(191.14deg, #FCF8F5 6.45%, #E0EFBD 94.12%)',

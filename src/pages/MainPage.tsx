@@ -1,4 +1,3 @@
-// src/pages/MainPage.tsx - КОМПАКТНЫЙ ДИЗАЙН
 import { useCartLocal } from '../hooks/useCartLocal';
 import { useNavigate } from 'react-router-dom';
 import { Cart, Heart, Home, Search, User, MapPin, Filter, Star } from 'iconoir-react';
@@ -43,7 +42,6 @@ export default function MainPage() {
   const DesktopProductCard = ({ product }: { product: Product }) => {
     const navigate = useNavigate();
 
-    // ✅ isFavorite из useCartLocal
     const isFavorite = () => {
       const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -52,13 +50,13 @@ export default function MainPage() {
 
     const handleAddToCart = (e: React.MouseEvent) => {
       e.stopPropagation();
-      addToCart(product); // ✅ useCartLocal!
+      addToCart(product); 
       navigate('/cart');
     };
 
     const handleFavorite = (e: React.MouseEvent) => {
       e.stopPropagation();
-      toggleFavorite(product); // ✅ useCartLocal!
+      toggleFavorite(product); 
     };
 
     return (
@@ -245,7 +243,6 @@ export default function MainPage() {
               </div>
             </div>
 
-            {/* Товары */}
             <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="text-2xl font-bold text-[#222021]" style={{ fontFamily: 'Manrope, sans-serif' }}>Популярные товары</h2>
@@ -268,7 +265,6 @@ export default function MainPage() {
           </div>
         </div>
 
-        {/* ✅ НИЖНЯЯ НАВИГАЦИЯ - useCartLocal */}
         <div className="fixed bottom-0 left-0 right-0 bg-white shadow-sm border-t border-gray-100">
           <div className="max-w-3xl mx-auto">
             <div className="flex items-center justify-around py-3">
@@ -304,7 +300,6 @@ export default function MainPage() {
         </div>
       </div>
 
-      {/* ✅ МОБИЛЬНАЯ ВЕРСИЯ - КОМПАКТНАЯ */}
       <div className="md:hidden w-full h-full">
         <div className="flex min-h-screen w-full items-center justify-center bg-background">
           <div className="w-[390px] h-[844px] overflow-y-hidden relative overflow-hidden shadow-xl">
@@ -447,7 +442,6 @@ export default function MainPage() {
               </div>
             </div>
 
-            {/* ✅ МОБИЛЬНАЯ НАВИГАЦИЯ - useCartLocal */}
             <div className="absolute left-0 right-0 bottom-0 flex items-center justify-around" style={{
               marginLeft: '10px',
               width: '366px',

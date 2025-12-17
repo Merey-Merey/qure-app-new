@@ -1,4 +1,3 @@
-// src/routes/OnboardingRoute.tsx
 import { useNavigate } from 'react-router-dom';
 import OnboardingPage from '../pages/OnboardingPage';
 

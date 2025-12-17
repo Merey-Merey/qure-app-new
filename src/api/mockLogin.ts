@@ -1,4 +1,3 @@
-// src/api/mockLogin.ts
 interface User {
   id: number | string;
   name: string;

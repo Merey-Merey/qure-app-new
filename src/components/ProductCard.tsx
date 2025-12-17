@@ -1,4 +1,3 @@
-// src/components/ProductCard.tsx
 import { useState } from 'react';
 import { Heart } from 'iconoir-react';
 import type { Product } from '../mocks/products';
@@ -73,7 +72,6 @@ export default function ProductCard({ product }: ProductCardProps) {
           </span>
         )}
 
-        {/* сердечко */}
         <button
           onClick={() => toggleFavorite(product)}
           className="absolute top-32 right-2 p-1 rounded-full bg-white/70"

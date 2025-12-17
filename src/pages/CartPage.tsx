@@ -1,4 +1,3 @@
-// src/pages/CartPage.tsx - ✅ КОМПАКТНЫЙ ДИЗАЙН
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Cart, Heart, Home, User, Trash, ArrowLeft, Plus, Minus } from 'iconoir-react';
@@ -23,7 +22,6 @@ export default function CartPage() {
 
   return (
     <div className="w-full min-h-screen bg-background">
-      {/* ✅ ДЕСКТОП ВЕРСИЯ - КОМПАКТНЫЙ ДИЗАЙН */}
       <div className="hidden lg:flex w-full min-h-screen">
         <div className="w-2/5 h-full flex flex-col items-center p-6 xl:p-8 bg-gradient-to-b from-[#FCF8F5] to-[#E0EFBD]/30">
           <div className="max-w-md mx-auto w-full">
@@ -37,7 +35,6 @@ export default function CartPage() {
             </button>
 
             <div className="mb-10">
-              {/* ✅ СТАТИСТИКА КОРЗИНЫ */}
               <div className="bg-white/80 backdrop-blur-sm rounded-xl p-5 shadow-sm mb-6">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-base font-bold" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>
@@ -84,7 +81,6 @@ export default function CartPage() {
                 </div>
               </div>
 
-              {/* ✅ ПРЕИМУЩЕСТВА */}
               <div className="space-y-3">
                 <div className="flex items-center gap-3 p-3 rounded-lg bg-white/50 backdrop-blur-sm">
                   <div className="w-8 h-8 rounded-md bg-[#2B865A]/10 flex items-center justify-center">
@@ -152,7 +148,6 @@ export default function CartPage() {
                 </div>
               ) : (
                 <div className="space-y-6">
-                  {/* ✅ ДОСТУПНЫЕ ТОВАРЫ */}
                   {available.length > 0 && (
                     <div>
                       <h2 className="text-lg font-bold mb-3" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>
@@ -200,7 +195,6 @@ export default function CartPage() {
                     </div>
                   )}
 
-                  {/* ✅ ТОВАРЫ ПО РЕЦЕПТУ */}
                   {needRx.length > 0 && (
                     <div>
                       <h2 className="text-lg font-bold mb-3" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>
@@ -255,7 +249,6 @@ export default function CartPage() {
                     </div>
                   )}
 
-                  {/* ✅ КНОПКА ОФОРМЛЕНИЯ */}
                   {!isEmpty && (
                     <div className="sticky bottom-0 pt-6 border-t border-gray-200 bg-white/90 backdrop-blur-sm mt-4">
                       <button
@@ -274,7 +267,6 @@ export default function CartPage() {
           </div>
         </div>
 
-        {/* ✅ ДЕСКТОП НАВИГАЦИЯ - КОМПАКТНАЯ */}
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full shadow-xl px-5 py-3">
           <div className="flex items-center gap-6">
             {[

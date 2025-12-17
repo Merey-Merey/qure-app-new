@@ -1,4 +1,3 @@
-// src/hooks/useCartLocal.ts - ✅ TypeScript 100%!
 import { useState, useEffect } from 'react';
 import { type Product } from '../mocks/products';
 

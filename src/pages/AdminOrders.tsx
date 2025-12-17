@@ -48,7 +48,6 @@ const AdminOrders = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] p-4">
-      {/* Хедер */}
       <header className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -67,7 +66,6 @@ const AdminOrders = () => {
           </Link>
         </div>
 
-        {/* Фильтры */}
         <div className="flex gap-2 overflow-x-auto pb-2 mb-4">
           {[
             { id: 'all', label: 'Все' },
@@ -89,7 +87,6 @@ const AdminOrders = () => {
           ))}
         </div>
 
-        {/* KPI карточки */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           <div className="bg-white rounded-xl p-3 shadow-sm">
             <p className="text-xs text-[#8a96a6] mb-1">Завершены</p>
@@ -106,7 +103,6 @@ const AdminOrders = () => {
         </div>
       </header>
 
-      {/* Список заказов */}
       <section className="space-y-4">
         {filteredOrders.length === 0 ? (
           <div className="text-center py-8 bg-white rounded-xl shadow-sm">
@@ -136,7 +132,6 @@ const AdminOrders = () => {
                 <span>Товаров: {order.items}</span>
               </div>
 
-              {/* Действия в зависимости от статуса */}
               <div className="flex flex-wrap gap-2">
                 <button className="px-3 py-1.5 rounded-full bg-[#edf2f7] text-xs text-[#1f2733] hover:bg-[#e1e7f0] transition-colors">
                   Подробнее

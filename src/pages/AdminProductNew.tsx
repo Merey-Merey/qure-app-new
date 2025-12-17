@@ -71,7 +71,6 @@ const AdminProductNew = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] p-4">
-      {/* Хедер */}
       <header className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -92,7 +91,6 @@ const AdminProductNew = () => {
         </div>
       </header>
 
-      {/* Форма */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-4">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -227,7 +225,6 @@ const AdminProductNew = () => {
         </form>
       </div>
 
-      {/* Подсказки */}
       <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
         <h3 className="text-xs font-medium text-blue-800 mb-1">Подсказки:</h3>
         <ul className="text-[10px] text-blue-700 space-y-0.5">

@@ -1,4 +1,3 @@
-// src/store/favorites.ts
 import { create } from 'zustand';
 import type { Product } from '../mocks/products';
 

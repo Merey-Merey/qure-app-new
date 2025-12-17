@@ -63,7 +63,6 @@ export default function CheckoutPage() {
     
     setIsProcessing(true);
     
-    // Имитация процесса оформления заказа
     await new Promise(resolve => setTimeout(resolve, 1500));
     
     localStorage.setItem('lastOrder', JSON.stringify({
@@ -74,7 +73,6 @@ export default function CheckoutPage() {
       phone
     }));
 
-    // Очищаем корзину
     localStorage.removeItem('cart');
     
     navigate('/order-success');
@@ -136,9 +134,7 @@ export default function CheckoutPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Левая колонка - Информация о заказе */}
           <div className="lg:col-span-2 space-y-6">
-            {/* Контактная информация */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/50">
               <h2 className="text-lg font-bold mb-4 text-[#222021] pb-3 border-b border-[#F0F0F0]">
                 Контактная информация
@@ -206,7 +202,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Товары в корзине */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/50">
               <h2 className="text-lg font-bold mb-4 text-[#222021] pb-3 border-b border-[#F0F0F0]">
                 Товары в корзине
@@ -274,9 +269,7 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Правая колонка - Итог заказа */}
           <div className="space-y-6">
-            {/* Способы оплаты */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/50">
               <h2 className="text-lg font-bold mb-4 text-[#222021] pb-3 border-b border-[#F0F0F0]">
                 Способ оплаты
@@ -336,7 +329,6 @@ export default function CheckoutPage() {
               </div>
             </div>
 
-            {/* Итог заказа */}
             <div className="bg-white/90 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-white/50 sticky top-6">
               <h2 className="text-base font-bold mb-4 text-[#222021] pb-3 border-b border-[#F0F0F0]">
                 Итог заказа

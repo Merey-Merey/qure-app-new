@@ -1,4 +1,3 @@
-// src/pages/ProfilePage.tsx 
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -140,7 +139,6 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Правая колонка */}
         <div className="w-2/3 h-full flex items-center justify-center p-6 xl:p-8">
           <div className="w-full max-w-3xl mx-auto">
             <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6 xl:p-8">
@@ -227,7 +225,6 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* ✅ ДЕСКТОП НАВИГАЦИЯ - КОМПАКТНАЯ */}
         <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg px-5 py-3">
           <div className="flex items-center gap-6">
             {[

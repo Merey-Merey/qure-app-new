@@ -227,7 +227,6 @@ const AdminProducts = () => {
 
   return (
     <div className="min-h-screen bg-[#f5f7fa] p-4">
-      {/* Хедер */}
       <header className="mb-6">
         <div className="flex items-center justify-between mb-4">
           <div>
@@ -256,7 +255,6 @@ const AdminProducts = () => {
           </div>
         </div>
 
-        {/* Поиск */}
         <div className="relative mb-4">
           <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-[#8a96a6]" />
           <input
@@ -268,7 +266,6 @@ const AdminProducts = () => {
           />
         </div>
 
-        {/* Кнопка добавления */}
         <button
           onClick={handleAddNew}
           className="w-full mb-4 px-4 py-3 rounded-xl bg-[#21a56b] text-white text-sm font-medium shadow-sm hover:bg-[#1b8a59] transition-colors flex items-center justify-center gap-2"
@@ -278,7 +275,6 @@ const AdminProducts = () => {
         </button>
       </header>
 
-      {/* Статистика */}
       <div className="grid grid-cols-2 gap-3 mb-6">
         <div className="bg-white rounded-xl p-3 shadow-sm">
           <p className="text-xs text-[#8a96a6] mb-1">Всего товаров</p>
@@ -292,7 +288,6 @@ const AdminProducts = () => {
         </div>
       </div>
 
-      {/* Список товаров */}
       <section className="space-y-3">
         {filteredProducts.length === 0 ? (
           <div className="text-center py-8 bg-white rounded-xl shadow-sm">
@@ -365,7 +360,6 @@ const AdminProducts = () => {
         )}
       </section>
 
-      {/* Модалка */}
       {showEditModal && (
         <div className="fixed inset-0 bg-black/50 flex items-start justify-center p-4 z-50 overflow-y-auto">
           <div className="bg-white rounded-xl shadow-xl w-full max-w-md mt-4 mb-4">

@@ -1,4 +1,3 @@
-// src/pages/FavoritesPage.tsx - КОМПАКТНЫЙ ДИЗАЙН
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { Cart, Heart, Home, User, Search, ArrowLeft, Trash } from 'iconoir-react';
@@ -81,7 +80,6 @@ export default function FavoritesPage() {
               </div>
             </div>
 
-            {/* ✅ ПОИСК + ФИЛЬТРЫ */}
             <div className="mb-5">
               <label className="block text-xs font-semibold mb-1.5" style={{ fontFamily: 'Manrope, sans-serif', color: '#222021' }}>
                 Поиск в избранном
@@ -99,7 +97,6 @@ export default function FavoritesPage() {
               </div>
             </div>
 
-            {/* ✅ КНОПКА КОРЗИНЫ СО СЧЕТЧИКОМ */}
             <button 
               onClick={() => navigate('/cart')}
               className="w-full mb-5 py-2.5 px-3 rounded-lg bg-[#2B865A] text-white font-semibold hover:bg-[#24704A] transition-all flex items-center justify-center gap-1.5 relative text-sm"
@@ -126,7 +123,6 @@ export default function FavoritesPage() {
           </div>
         </div>
 
-        {/* ✅ ПРАВАЯ ПАНЕЛЬ - КОМПАКТНАЯ */}
         <div className="w-2/3 h-full flex flex-col p-6 xl:p-8">
           <div className="max-w-6xl mx-auto w-full">
             <div className="w-full rounded-xl bg-white/90 backdrop-blur-sm shadow-lg border border-white/20 p-6 xl:p-8 min-h-[550px]">
@@ -196,7 +192,6 @@ export default function FavoritesPage() {
           </div>
         </div>
 
-        {/* ✅ НИЖНЯЯ НАВИГАЦИЯ СО СЧЕТЧИКАМИ - КОМПАКТНАЯ */}
         <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm rounded-full shadow-lg px-5 py-3">
           <div className="flex items-center gap-6">
             {[
